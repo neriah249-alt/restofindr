@@ -1,0 +1,30 @@
+# Node modules
+node_modules/
+package-lock.json
+
+# Build
+dist/
+.vite/
+.cache/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Backend
+backend/__pycache__/
+backend/venv/
+*.pyc
+*.pyo
+
+# Uploads
+uploads/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
