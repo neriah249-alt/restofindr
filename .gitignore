@@ -17,6 +17,7 @@ backend/__pycache__/
 backend/venv/
 *.pyc
 *.pyo
+backend/.env.production
 
 # Uploads
 uploads/
