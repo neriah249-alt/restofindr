@@ -1,13 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
+
 from database import engine, Base
 from routes import auth, restaurants, restaurateur, favorites, search
-
-load_dotenv()
 
 Base.metadata.create_all(bind=engine)
 
@@ -17,7 +16,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# ✅ CORS - Configuration pour la production
+# CORS pour la production
 origins = [
     "http://localhost:5173",
     "http://localhost:3000",
@@ -32,13 +31,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# ✅ Dossier uploads
-if not os.path.exists("uploads"):
-    os.makedirs("uploads")
-    os.makedirs("uploads/restaurants")
-
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 # Routes
 app.include_router(auth.router)
@@ -57,4 +49,4 @@ def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
