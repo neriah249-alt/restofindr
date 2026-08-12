@@ -4,6 +4,8 @@ import {
   googleProvider, 
   signInWithPopup
 } from '../firebase/firebase';
+// En haut du fichier, après les imports
+console.log('🔍 API_URL depuis import.meta.env:', import.meta.env.VITE_API_URL);
 
 // ✅ UTILISATION DE LA VARIABLE D'ENVIRONNEMENT
 const API_URL = import.meta.env.VITE_API_URL 
