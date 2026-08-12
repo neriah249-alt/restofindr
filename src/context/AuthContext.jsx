@@ -5,7 +5,10 @@ import {
   signInWithPopup
 } from '../firebase/firebase';
 
-const API_URL = 'http://localhost:8000/api';
+// ✅ UTILISATION DE LA VARIABLE D'ENVIRONNEMENT
+const API_URL = import.meta.env.VITE_API_URL 
+    ? `${import.meta.env.VITE_API_URL}/api` 
+    : 'http://localhost:8000/api';
 
 const AuthContext = createContext();
 
