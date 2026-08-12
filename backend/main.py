@@ -44,29 +44,35 @@ app = FastAPI(
 )
 
 # ============================================
-# 🔧 CORS - AUTORISER TOUS LES DOMAINES
+# 🔧 CORS - Autoriser tous les domaines
 # ============================================
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # ← AUTORISE TOUTES LES ORIGINES
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Routes
-app.include_router(auth.router)
-app.include_router(restaurants.router)
-app.include_router(restaurateur.router)
-app.include_router(favorites.router)
-app.include_router(search.router)
+# ============================================
+# 📍 ROUTES - Sans préfixe supplémentaire
+# ============================================
+app.include_router(auth.router)          # → /api/auth/...
+app.include_router(restaurants.router)   # → /api/restaurants/...
+app.include_router(restaurateur.router)  # → /api/restaurateur/...
+app.include_router(favorites.router)     # → /api/favorites/...
+app.include_router(search.router)        # → /api/search/...
 
+# ============================================
+# 🏠 ENDPOINTS DE BASE
+# ============================================
 @app.get("/")
 def root():
     return {"message": "RestoGo Bénin API", "status": "running"}
 
 @app.get("/health")
 def health_check():
+    """Vérifie l'état de l'API et de la base de données"""
     try:
         from sqlalchemy import text
         with engine.connect() as conn:
