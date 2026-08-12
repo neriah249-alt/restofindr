@@ -34,7 +34,7 @@ def init_database(max_retries=3, delay=3):
                 return False
     return False
 
-# Initialisation de la base de données (ne bloque pas le démarrage)
+# Initialisation de la base de données
 init_database()
 
 app = FastAPI(
@@ -43,17 +43,12 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS pour la production
-origins = [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    os.getenv("FRONTEND_URL", ""),
-    "https://restogo-benin.vercel.app",
-]
-
+# ============================================
+# 🔧 CORS - AUTORISER TOUS LES DOMAINES
+# ============================================
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],  # ← AUTORISE TOUTES LES ORIGINES
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -72,9 +67,7 @@ def root():
 
 @app.get("/health")
 def health_check():
-    """Vérifie l'état de l'API et de la base de données"""
     try:
-        # Vérifier la connexion à la base de données
         from sqlalchemy import text
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
