@@ -5,7 +5,10 @@ import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useToast } from '../../context/ToastContext';
 
-const API_URL = 'http://localhost:8000/api';
+// ✅ CORRECTION
+const API_URL = import.meta.env.VITE_API_URL 
+    ? `${import.meta.env.VITE_API_URL}/api` 
+    : 'http://localhost:8000/api';
 
 const ReservationModal = ({ isOpen, onClose, restaurant }) => {
   const { token, user, isAuthenticated } = useAuth();

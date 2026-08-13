@@ -6,7 +6,10 @@ import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { getFeaturedRestaurants, getFavorites, toggleFavorite } from '../../services/api';
 
-const API_URL = 'http://localhost:8000/api';
+// ✅ CORRECTION
+const API_URL = import.meta.env.VITE_API_URL 
+    ? `${import.meta.env.VITE_API_URL}/api` 
+    : 'http://localhost:8000/api';
 
 const PopularRestaurants = () => {
   const navigate = useNavigate();
@@ -147,7 +150,8 @@ const PopularRestaurants = () => {
   const getImageUrl = (restaurant) => {
     // Si le restaurant a des photos uploadées, utiliser la première
     if (restaurant.photos && restaurant.photos.length > 0) {
-      return `http://localhost:8000${restaurant.photos[0].image_url}`;
+      // ✅ CORRECTION : Utiliser l'URL de l'API
+      return `${API_URL.replace('/api', '')}${restaurant.photos[0].image_url}`;
     }
     // Sinon utiliser l'image par défaut
     return restaurant.image_url || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop';

@@ -5,7 +5,10 @@ import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useToast } from '../../context/ToastContext';
 
-const API_URL = 'http://localhost:8000/api';
+// ✅ CORRECTION : Utilisation de la variable d'environnement
+const API_URL = import.meta.env.VITE_API_URL 
+    ? `${import.meta.env.VITE_API_URL}/api` 
+    : 'http://localhost:8000/api';
 
 const PhotoManager = ({ restaurantId }) => {
   const { token, isAuthenticated, user } = useAuth();
@@ -144,7 +147,8 @@ const PhotoManager = ({ restaurantId }) => {
               className="relative group rounded-xl overflow-hidden aspect-square"
             >
               <img
-                src={`http://localhost:8000${photo.image_url}`}
+                // ✅ CORRECTION : Utilisation de API_URL pour les images
+                src={`${API_URL.replace('/api', '')}${photo.image_url}`}
                 alt="Restaurant"
                 className="w-full h-full object-cover"
               />

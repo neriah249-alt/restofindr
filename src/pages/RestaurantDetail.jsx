@@ -18,7 +18,10 @@ import ReviewsSection from '../components/restaurant/ReviewsSection';
 import ReservationModal from '../components/restaurant/ReservationModal';
 import PhotoManager from '../components/restaurant/PhotoManager';
 
-const API_URL = 'http://localhost:8000/api';
+// ✅ CORRECTION : Utilisation de la variable d'environnement
+const API_URL = import.meta.env.VITE_API_URL 
+    ? `${import.meta.env.VITE_API_URL}/api` 
+    : 'http://localhost:8000/api';
 
 // Icônes des services
 const serviceIcons = {
