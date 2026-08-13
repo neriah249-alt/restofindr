@@ -1,4 +1,6 @@
-// src/services/api.js
+// ============================================
+// 📌 CONFIGURATION DE L'API
+// ============================================
 const API_URL =
     import.meta.env.VITE_API_URL ?
     `${import.meta.env.VITE_API_URL}/api` :

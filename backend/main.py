@@ -44,24 +44,24 @@ app = FastAPI(
 )
 
 # ============================================
-# 🔧 CORS - Autoriser tous les domaines
+# 🔧 CORS - CORRECT (autorise tout le monde)
 # ============================================
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],           # ← TRÈS IMPORTANT
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # ============================================
-# 📍 ROUTES - Sans préfixe supplémentaire
+# 📍 ROUTES
 # ============================================
-app.include_router(auth.router)          # → /api/auth/...
-app.include_router(restaurants.router)   # → /api/restaurants/...
-app.include_router(restaurateur.router)  # → /api/restaurateur/...
-app.include_router(favorites.router)     # → /api/favorites/...
-app.include_router(search.router)        # → /api/search/...
+app.include_router(auth.router)
+app.include_router(restaurants.router)
+app.include_router(restaurateur.router)
+app.include_router(favorites.router)
+app.include_router(search.router)
 
 # ============================================
 # 🏠 ENDPOINTS DE BASE

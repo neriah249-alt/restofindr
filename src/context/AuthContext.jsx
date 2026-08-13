@@ -4,10 +4,10 @@ import {
   googleProvider, 
   signInWithPopup
 } from '../firebase/firebase';
-// En haut du fichier, après les imports
-console.log('🔍 API_URL depuis import.meta.env:', import.meta.env.VITE_API_URL);
 
-// ✅ UTILISATION DE LA VARIABLE D'ENVIRONNEMENT
+// ============================================
+// 📌 CONFIGURATION DE L'API
+// ============================================
 const API_URL = import.meta.env.VITE_API_URL 
     ? `${import.meta.env.VITE_API_URL}/api` 
     : 'http://localhost:8000/api';
@@ -49,7 +49,6 @@ export const AuthProvider = ({ children }) => {
           });
           if (response.ok) {
             const userData = await response.json();
-            // Ajouter les initiales à l'utilisateur
             const userWithInitials = {
               ...userData,
               initials: getInitials(userData.name)
@@ -102,7 +101,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('token', access_token);
       setToken(access_token);
       
-      // Récupérer les infos utilisateur
       const userResponse = await fetch(`${API_URL}/auth/me`, {
         headers: { 
           'Authorization': `Bearer ${access_token}`,
@@ -112,7 +110,6 @@ export const AuthProvider = ({ children }) => {
       
       if (userResponse.ok) {
         const userData = await userResponse.json();
-        // Ajouter les initiales
         const userWithInitials = {
           ...userData,
           initials: getInitials(userData.name)
@@ -178,13 +175,11 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log('🔑 Tentative de connexion avec Google...');
       
-      // Se connecter avec Google (Firebase)
       const result = await signInWithPopup(auth, googleProvider);
       const firebaseUser = result.user;
       
       console.log('✅ Firebase user:', firebaseUser);
       
-      // Envoyer les données au backend
       const response = await fetch(`${API_URL}/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -210,7 +205,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('token', access_token);
       setToken(access_token);
       
-      // Récupérer les infos utilisateur
       const userResponse = await fetch(`${API_URL}/auth/me`, {
         headers: { 
           'Authorization': `Bearer ${access_token}`,
@@ -220,7 +214,6 @@ export const AuthProvider = ({ children }) => {
       
       if (userResponse.ok) {
         const userData = await userResponse.json();
-        // Ajouter les initiales
         const userWithInitials = {
           ...userData,
           initials: getInitials(userData.name)
@@ -275,7 +268,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     isAuthenticated: !!user,
     token,
-    getInitials  // Exporter la fonction pour l'utiliser ailleurs
+    getInitials
   };
 
   return (
