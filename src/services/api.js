@@ -1,10 +1,7 @@
 // ============================================
-// 📌 CONFIGURATION DE L'API
+// 📌 CONFIGURATION DE L'API - HARDCODÉ
 // ============================================
-const API_URL =
-    import.meta.env.VITE_API_URL ?
-    `${import.meta.env.VITE_API_URL}/api` :
-    'http://localhost:8000/api';
+const API_URL = 'https://restofindr-1.onrender.com/api';
 
 // ============================================
 // RESTAURANTS
