@@ -147,40 +147,43 @@ def reset_password(
     return {"message": "Mot de passe réinitialisé avec succès"}
 
 @router.post("/google")
-def google_login(
-    data: dict,
-    db: Session = Depends(get_db)
-):
+def google_login(data: dict, db: Session = Depends(get_db)):
     """Connexion avec Google (Firebase)"""
+    # Étape 1 : Valider les données d'entrée
     email = data.get("email")
-    name = data.get("name", email)
+    name = data.get("name", email)  # Si pas de nom, on utilise l'email
     firebase_uid = data.get("firebase_uid")
-    
+
     if not email:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email requis"
         )
-    
-    # Vérifier si l'utilisateur existe
+    if not firebase_uid:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="firebase_uid requis"
+        )
+
+    # Étape 2 : Vérifier ou créer l'utilisateur
     user = db.query(User).filter(User.email == email).first()
-    
+
     if not user:
         # Créer un nouvel utilisateur
         user = User(
             name=name,
             email=email,
-            password_hash=get_password_hash(firebase_uid or secrets.token_urlsafe(16)),
-            is_restaurateur=False
+            password_hash=get_password_hash(firebase_uid),
+            is_restaurateur=False  # Par défaut
         )
         db.add(user)
         db.commit()
         db.refresh(user)
-    
-    # Créer le token (7 jours pour Google)
+
+    # Étape 3 : Générer le token
     access_token_expires = timedelta(days=7)
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
-    
+
     return {"access_token": access_token, "token_type": "bearer"}
