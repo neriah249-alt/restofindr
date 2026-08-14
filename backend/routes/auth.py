@@ -35,7 +35,8 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     db_user = User(
         name=user.name,
         email=user.email,
-        password_hash=hashed_password
+        password_hash=hashed_password,
+        is_restaurateur=False  # Ajouté pour correspondre au modèle
     )
     db.add(db_user)
     db.commit()
@@ -146,44 +147,69 @@ def reset_password(
     
     return {"message": "Mot de passe réinitialisé avec succès"}
 
+# ============================================
+# ✅ ROUTE GOOGLE - VERSION CORRIGÉE
+# ============================================
 @router.post("/google")
 def google_login(data: dict, db: Session = Depends(get_db)):
     """Connexion avec Google (Firebase)"""
-    # Étape 1 : Valider les données d'entrée
-    email = data.get("email")
-    name = data.get("name", email)  # Si pas de nom, on utilise l'email
-    firebase_uid = data.get("firebase_uid")
+    print("🔵 === DEBUT google_login ===")
+    print(f"🔵 Données reçues: {data}")
+    try:
+        # Étape 1 : Valider les données d'entrée
+        email = data.get("email")
+        name = data.get("name", email)
+        firebase_uid = data.get("firebase_uid")
 
-    if not email:
+        print(f"🔵 Email: {email}, firebase_uid: {firebase_uid}")
+
+        if not email:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Email requis"
+            )
+        if not firebase_uid:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="firebase_uid requis"
+            )
+
+        # Étape 2 : Vérifier ou créer l'utilisateur
+        print("🔵 Recherche de l'utilisateur...")
+        user = db.query(User).filter(User.email == email).first()
+        print(f"🔵 Utilisateur trouvé: {user}")
+
+        if not user:
+            print(f"🆕 Création d'un nouvel utilisateur: {email}")
+            user = User(
+                name=name,
+                email=email,
+                password_hash=get_password_hash(firebase_uid),
+                is_restaurateur=False
+            )
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+            print(f"✅ Utilisateur créé avec ID: {user.id}")
+
+        # Étape 3 : Générer le token
+        print("🔵 Génération du token...")
+        access_token_expires = timedelta(days=7)
+        access_token = create_access_token(
+            data={"sub": user.email}, expires_delta=access_token_expires
+        )
+        print("✅ Token généré avec succès")
+
+        return {"access_token": access_token, "token_type": "bearer"}
+
+    except HTTPException:
+        # Ré-levée des exceptions HTTP
+        raise
+    except Exception as e:
+        print(f"❌ ERREUR dans google_login: {e}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email requis"
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Erreur interne: {str(e)}"
         )
-    if not firebase_uid:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="firebase_uid requis"
-        )
-
-    # Étape 2 : Vérifier ou créer l'utilisateur
-    user = db.query(User).filter(User.email == email).first()
-
-    if not user:
-        # Créer un nouvel utilisateur
-        user = User(
-            name=name,
-            email=email,
-            password_hash=get_password_hash(firebase_uid),
-            is_restaurateur=False  # Par défaut
-        )
-        db.add(user)
-        db.commit()
-        db.refresh(user)
-
-    # Étape 3 : Générer le token
-    access_token_expires = timedelta(days=7)
-    access_token = create_access_token(
-        data={"sub": user.email}, expires_delta=access_token_expires
-    )
-
-    return {"access_token": access_token, "token_type": "bearer"}

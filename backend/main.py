@@ -44,11 +44,11 @@ app = FastAPI(
 )
 
 # ============================================
-# 🔧 CORS - CORRECT (autorise tout le monde)
+# 🔧 CORS - Autoriser tous les domaines
 # ============================================
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],           # ← TRÈS IMPORTANT
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -62,6 +62,13 @@ app.include_router(restaurants.router)
 app.include_router(restaurateur.router)
 app.include_router(favorites.router)
 app.include_router(search.router)
+
+# ============================================
+# 🧪 ROUTE DE TEST CORS
+# ============================================
+@app.post("/api/test")
+def test_cors():
+    return {"message": "CORS fonctionne ! 🎉"}
 
 # ============================================
 # 🏠 ENDPOINTS DE BASE
