@@ -8,12 +8,11 @@
         }
     }],
     "routes": [{
-            "src": "/(.*)",
-            "dest": "/dist/$1"
+            "handle": "filesystem"
         },
         {
             "src": "/(.*)",
-            "dest": "/dist/index.html"
+            "dest": "/index.html"
         }
     ]
 }

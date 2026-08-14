@@ -277,7 +277,7 @@ const Map = () => {
   return (
     <AnimatedBackground>
       <Navbar />
-      <main className="pt-24 pb-12">
+      <main className="pt-24 pb-12 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
             <div>
@@ -355,7 +355,7 @@ const Map = () => {
           </div>
 
           {/* Carte Leaflet */}
-          <div className="rounded-2xl overflow-hidden shadow-lg" style={{ height: '500px' }}>
+          <div className="rounded-2xl overflow-hidden shadow-lg relative z-0" style={{ height: '500px' }}>
             <MapContainer
               center={mapCenter}
               zoom={mapZoom}
