@@ -18,6 +18,8 @@ import RestaurantDetail from './pages/RestaurantDetail';
 import Profile from './pages/Profile';
 import BecomeRestaurateur from './pages/BecomeRestaurateur';
 import MyRestaurant from './pages/MyRestaurant';
+import FAQ from './pages/FAQ';           
+import Contact from './pages/Contact';   
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
             <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/about" element={<About />} />
             <Route path="/partner" element={<Partner />} />
+            <Route path="/faq" element={<FAQ />} />           
+            <Route path="/contact" element={<Contact />} />   
             
             <Route path="/dashboard" element={
               <ProtectedRoute>
