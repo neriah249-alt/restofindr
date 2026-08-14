@@ -111,6 +111,52 @@ def get_price_range_category(price_range):
             return "luxe"
     return "unknown"
 
+# ============================================
+# ✅ ROUTE SIMPLE (pour la recherche de base)
+# ============================================
+@router.get("/")
+def simple_search(
+    q: str = "",
+    db: Session = Depends(get_db)
+):
+    """
+    Recherche simple par nom ou cuisine
+    """
+    print(f"🔍 Recherche simple: '{q}'")
+    
+    if not q:
+        return []
+    
+    results = db.query(Restaurant).filter(
+        or_(
+            Restaurant.name.ilike(f"%{q}%"),
+            Restaurant.cuisine_type.ilike(f"%{q}%"),
+            Restaurant.description.ilike(f"%{q}%")
+        )
+    ).filter(Restaurant.is_active == True).limit(20).all()
+    
+    print(f"🔍 Résultats trouvés: {len(results)}")
+    
+    return [
+        {
+            "id": r.id,
+            "name": r.name,
+            "cuisine_type": r.cuisine_type,
+            "rating": r.rating,
+            "review_count": r.review_count,
+            "price_range": r.price_range,
+            "address": r.address,
+            "image_url": r.image_url,
+            "is_open": getattr(r, 'is_open', True),
+            "latitude": getattr(r, 'latitude', None),
+            "longitude": getattr(r, 'longitude', None),
+        }
+        for r in results
+    ]
+
+# ============================================
+# ✅ ROUTE CONVERSATIONNELLE (existante)
+# ============================================
 @router.get("/conversational")
 def search_conversational(
     query: str = Query(..., description="Recherche en langage naturel"),
@@ -217,7 +263,7 @@ def search_conversational(
             "match_cuisine": item["match_cuisine"],
             "match_ambiance": item["match_ambiance"],
             "match_price": item["match_price"],
-            "is_open": getattr(r, 'is_open', True),  # ✅ CORRECTION
+            "is_open": getattr(r, 'is_open', True),
             "review_count": r.review_count
         })
     
