@@ -11,7 +11,8 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
 
-const API_URL = 'http://localhost:8000/api';
+const RAW_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const API_URL = RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL}/api`;
 
 const Search = () => {
   const { isAuthenticated } = useAuth();

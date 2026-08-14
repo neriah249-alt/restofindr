@@ -8,7 +8,8 @@ import Footer from '../components/layout/Footer';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
 import { FaUser, FaEnvelope, FaHeart, FaUtensils, FaStore, FaSignOutAlt, FaMapMarkerAlt } from 'react-icons/fa';
 
-const API_URL = 'http://localhost:8000/api';
+const RAW_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const API_URL = RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL}/api`;
 
 const Profile = () => {
   const navigate = useNavigate();
