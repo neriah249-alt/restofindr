@@ -156,7 +156,6 @@ def google_login(data: dict, db: Session = Depends(get_db)):
     print("🔵 === DEBUT google_login ===")
     print(f"🔵 Données reçues: {data}")
     try:
-        # Étape 1 : Valider les données d'entrée
         email = data.get("email")
         name = data.get("name", email)
         firebase_uid = data.get("firebase_uid")
@@ -174,7 +173,6 @@ def google_login(data: dict, db: Session = Depends(get_db)):
                 detail="firebase_uid requis"
             )
 
-        # Étape 2 : Vérifier ou créer l'utilisateur
         print("🔵 Recherche de l'utilisateur...")
         user = db.query(User).filter(User.email == email).first()
         print(f"🔵 Utilisateur trouvé: {user}")
@@ -184,7 +182,8 @@ def google_login(data: dict, db: Session = Depends(get_db)):
             user = User(
                 name=name,
                 email=email,
-                password_hash=get_password_hash(firebase_uid),
+                # ✅ CORRECTION : Tronquer à 72 caractères
+                password_hash=get_password_hash(firebase_uid[:72]),
                 is_restaurateur=False
             )
             db.add(user)
@@ -192,7 +191,6 @@ def google_login(data: dict, db: Session = Depends(get_db)):
             db.refresh(user)
             print(f"✅ Utilisateur créé avec ID: {user.id}")
 
-        # Étape 3 : Générer le token
         print("🔵 Génération du token...")
         access_token_expires = timedelta(days=7)
         access_token = create_access_token(
@@ -203,7 +201,6 @@ def google_login(data: dict, db: Session = Depends(get_db)):
         return {"access_token": access_token, "token_type": "bearer"}
 
     except HTTPException:
-        # Ré-levée des exceptions HTTP
         raise
     except Exception as e:
         print(f"❌ ERREUR dans google_login: {e}")
