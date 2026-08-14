@@ -2,13 +2,16 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import { 
   auth, 
   googleProvider, 
-  signInWithPopup
+  signInWithPopup,
+  getFirebasePassword  // ✅ IMPORT DE LA NOUVELLE FONCTION
 } from '../firebase/firebase';
 
 // ============================================
-// 📌 CONFIGURATION DE L'API - HARDCODÉ
+// 📌 CONFIGURATION DE L'API
 // ============================================
-const API_URL = 'https://restofindr-1.onrender.com/api';
+const API_URL = import.meta.env.VITE_API_URL 
+    ? `${import.meta.env.VITE_API_URL}/api` 
+    : 'http://localhost:8000/api';
 
 const AuthContext = createContext();
 
@@ -167,7 +170,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // ============================================
-  // CONNEXION AVEC GOOGLE
+  // CONNEXION AVEC GOOGLE - VERSION CORRIGÉE
   // ============================================
   const loginWithGoogle = async () => {
     try {
@@ -178,13 +181,17 @@ export const AuthProvider = ({ children }) => {
       
       console.log('✅ Firebase user:', firebaseUser);
       
+      // ✅ GÉNÉRER UN MOT DE PASSE FIXE À PARTIR DE L'UID
+      const password = getFirebasePassword(firebaseUser.uid);
+      console.log('🔑 Mot de passe généré:', password);
+      
       const response = await fetch(`${API_URL}/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: firebaseUser.email,
           name: firebaseUser.displayName || firebaseUser.email,
-          firebase_uid: firebaseUser.uid,
+          firebase_uid: password,  // ✅ ENVOI DU MOT DE PASSE GÉNÉRÉ
           photo_url: firebaseUser.photoURL
         })
       });

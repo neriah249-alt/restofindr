@@ -183,7 +183,7 @@ def google_login(data: dict, db: Session = Depends(get_db)):
                 name=name,
                 email=email,
                 # ✅ CORRECTION : Tronquer à 72 caractères
-                password_hash=get_password_hash(firebase_uid[:72]),
+                password_hash=get_password_hash(firebase_uid),
                 is_restaurateur=False
             )
             db.add(user)

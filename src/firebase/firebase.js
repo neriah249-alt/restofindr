@@ -5,7 +5,6 @@ import {
     signInWithPopup
 } from 'firebase/auth';
 
-// ✅ FORCE REBUILD - 14/08/2026
 const firebaseConfig = {
     apiKey: "AIzaSyBbSEVkhhw6mgQqTWshnMJhfTlR97SUkMM",
     authDomain: "restogo-a0aec.firebaseapp.com",
@@ -25,8 +24,18 @@ const googleProvider = new GoogleAuthProvider();
 googleProvider.addScope('profile');
 googleProvider.addScope('email');
 
+// ✅ NOUVEAU : Fonction pour obtenir un mot de passe fixe
+const getFirebasePassword = (uid) => {
+    // Utilise le firebase_uid comme source, mais le tronque à 20 caractères
+    // et le combine avec un salt fixe
+    const salt = "RestoGo2024";
+    const base = uid.substring(0, 20);
+    return `${salt}${base}`;
+};
+
 export {
     auth,
     googleProvider,
-    signInWithPopup
+    signInWithPopup,
+    getFirebasePassword // ← EXPORTEZ LA FONCTION
 };
