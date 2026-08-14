@@ -5,7 +5,7 @@ import {
     signInWithPopup
 } from 'firebase/auth';
 
-// Your web app's Firebase configuration
+// ✅ FORCE REBUILD - 14/08/2026
 const firebaseConfig = {
     apiKey: "AIzaSyBbSEVkhhw6mgQqTWshnMJhfTlR97SUkMM",
     authDomain: "restogo-a0aec.firebaseapp.com",
