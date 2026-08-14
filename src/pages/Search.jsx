@@ -137,7 +137,7 @@ const Search = () => {
       if (filters.city !== 'all') params.append('city', filters.city);
       if (filters.cuisine !== 'all') params.append('cuisine', filters.cuisine);
       
-      const response = await fetch(`${API_URL}/restaurants/search?${params}`);
+      const response = await fetch(`${API_URL}/search?${params}`);
       if (response.ok) {
         const data = await response.json();
         setResults(data);
