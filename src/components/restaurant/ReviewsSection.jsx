@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaStar, FaUser, FaTrash, FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
-import { useTheme } from '../../context/ThemeContext';
 import { useToast } from '../../context/ToastContext';
 
 // ✅ CORRECTION
@@ -12,7 +11,6 @@ const API_URL = import.meta.env.VITE_API_URL
 
 const ReviewsSection = ({ restaurantId }) => {
   const { token, user, isAuthenticated } = useAuth();
-  const { isDark } = useTheme();
   const { showToast } = useToast();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -145,7 +143,7 @@ const ReviewsSection = ({ restaurantId }) => {
             className={`${interactive ? 'cursor-pointer hover:scale-110 transition-transform' : 'cursor-default'} focus:outline-none`}
           >
             <FaStar 
-              className={`${star <= rating ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'} ${size}`}
+              className={`${star <= rating ? 'text-yellow-400' : 'text-gray-300'} ${size}`}
             />
           </button>
         ))}
@@ -178,7 +176,7 @@ const ReviewsSection = ({ restaurantId }) => {
     return (
       <div className="text-center py-8">
         <div className="w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Chargement des avis...</p>
+        <p className="text-sm text-gray-500">Chargement des avis...</p>
       </div>
     );
   }
@@ -187,12 +185,12 @@ const ReviewsSection = ({ restaurantId }) => {
     <div className="space-y-6">
       {/* Statistiques */}
       {stats && (
-        <div className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+        <div className="p-6 rounded-2xl bg-white shadow-lg">
           <div className="flex flex-col sm:flex-row items-center gap-6">
             <div className="text-center">
               <div className="text-4xl font-bold text-primary-500">{stats.avg.toFixed(1)}</div>
               <div className="flex justify-center mt-1">{renderStars(Math.round(stats.avg))}</div>
-              <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <div className="text-sm text-gray-500">
                 {stats.total} avis
               </div>
             </div>
@@ -204,7 +202,7 @@ const ReviewsSection = ({ restaurantId }) => {
                   <div key={rating} className="flex items-center gap-2">
                     <span className="text-sm w-8 text-right">{rating}</span>
                     <FaStar className="text-yellow-400 text-sm" />
-                    <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
                       <div 
                         className={`h-full rounded-full ${
                           rating >= 4 ? 'bg-green-500' :
@@ -225,28 +223,26 @@ const ReviewsSection = ({ restaurantId }) => {
 
       {/* Formulaire d'avis */}
       {isAuthenticated && (
-        <div className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-          <h3 className={`font-display text-lg font-bold ${isDark ? 'text-white' : 'text-darkText'} mb-4`}>
+        <div className="p-6 rounded-2xl bg-white shadow-lg">
+          <h3 className="font-display text-lg font-bold text-darkText mb-4">
             {userReview ? 'Modifier mon avis' : 'Donner mon avis'}
           </h3>
           <div className="space-y-4">
             <div>
-              <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+              <label className="block text-sm font-medium mb-2 text-gray-700">
                 Votre note
               </label>
               {renderStars(userRating, true, 'text-2xl')}
             </div>
             <div>
-              <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+              <label className="block text-sm font-medium mb-2 text-gray-700">
                 Votre commentaire
               </label>
               <textarea
                 value={userComment}
                 onChange={(e) => setUserComment(e.target.value)}
                 rows="3"
-                className={`w-full px-4 py-3 rounded-xl outline-none transition-all duration-200 ${
-                  isDark ? 'bg-gray-700 text-white' : 'bg-gray-50 text-gray-700'
-                } focus:ring-2 focus:ring-primary-500`}
+                className="w-full px-4 py-3 rounded-xl outline-none transition-all duration-200 bg-gray-50 text-gray-700 focus:ring-2 focus:ring-primary-500"
                 placeholder="Partagez votre expérience..."
               />
             </div>
@@ -274,9 +270,7 @@ const ReviewsSection = ({ restaurantId }) => {
                     setUserRating(0);
                     setUserComment('');
                   }}
-                  className={`px-6 py-2 rounded-xl transition ${
-                    isDark ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
+                  className="px-6 py-2 rounded-xl transition bg-gray-100 text-gray-700 hover:bg-gray-200"
                 >
                   Annuler
                 </button>
@@ -288,11 +282,11 @@ const ReviewsSection = ({ restaurantId }) => {
 
       {/* Liste des avis */}
       <div className="space-y-4">
-        <h3 className={`font-display text-lg font-bold ${isDark ? 'text-white' : 'text-darkText'}`}>
+        <h3 className="font-display text-lg font-bold text-darkText">
           Tous les avis ({reviews.length})
         </h3>
         {reviews.length === 0 ? (
-          <div className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+          <div className="text-center py-8 text-gray-500">
             Aucun avis pour le moment. Soyez le premier à donner votre avis !
           </div>
         ) : (
@@ -303,20 +297,18 @@ const ReviewsSection = ({ restaurantId }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className={`p-4 rounded-xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg border ${
-                  isDark ? 'border-gray-700' : 'border-gray-100'
-                }`}
+                className="p-4 rounded-xl bg-white shadow-lg border border-gray-100"
               >
                 <div className="flex justify-between items-start">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-primary-600 dark:text-primary-300 font-bold">
+                    <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold">
                       {review.user?.name?.charAt(0) || 'U'}
                     </div>
                     <div>
                       <div className="font-medium">{review.user?.name || 'Utilisateur'}</div>
                       <div className="flex items-center gap-2">
                         {renderStars(review.rating, false, 'text-sm')}
-                        <span className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                        <span className="text-xs text-gray-400">
                           {formatDate(review.created_at)}
                         </span>
                       </div>
@@ -330,28 +322,24 @@ const ReviewsSection = ({ restaurantId }) => {
                           setUserRating(review.rating);
                           setUserComment(review.comment);
                         }}
-                        className={`p-1.5 rounded-lg transition ${
-                          isDark ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-100 text-gray-500'
-                        }`}
+                        className="p-1.5 rounded-lg transition hover:bg-gray-100 text-gray-500"
                       >
                         <FaEdit />
                       </button>
                       <button
                         onClick={() => handleDeleteReview(review.id)}
-                        className={`p-1.5 rounded-lg transition ${
-                          isDark ? 'hover:bg-red-900/30 text-gray-400' : 'hover:bg-red-50 text-red-500'
-                        }`}
+                        className="p-1.5 rounded-lg transition hover:bg-red-50 text-red-500"
                       >
                         <FaTrash />
                       </button>
                     </div>
                   )}
                 </div>
-                <div className={`mt-2 text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <div className="mt-2 text-sm text-gray-600">
                   {review.comment}
                 </div>
                 {review.updated_at && review.updated_at !== review.created_at && (
-                  <div className={`text-xs mt-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                  <div className="text-xs mt-1 text-gray-400">
                     (modifié)
                   </div>
                 )}

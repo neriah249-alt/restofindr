@@ -3,13 +3,11 @@ import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaGoogle, FaEye, FaEyeSlash, FaUtensils } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
 
 const Login = () => {
   const navigate = useNavigate();
   const { login, loginWithGoogle } = useAuth();
-  const { isDark } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -57,7 +55,7 @@ const Login = () => {
       const result = await login(formData.email, formData.password, formData.remember);
       if (result.success) {
         console.log('✅ Connexion réussie, redirection vers home');
-        navigate('/');  // ← Redirection vers Home
+        navigate('/');
       } else {
         setLoginError(result.error || 'Email ou mot de passe incorrect');
       }
@@ -76,7 +74,7 @@ const Login = () => {
       const result = await loginWithGoogle();
       if (result.success) {
         console.log('✅ Connexion Google réussie');
-        navigate('/');  // ← Redirection vers Home
+        navigate('/');
       } else {
         setLoginError(result.error || 'Erreur de connexion avec Google');
       }
@@ -96,7 +94,7 @@ const Login = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className={`rounded-3xl shadow-2xl p-8 ${isDark ? 'bg-gray-800' : 'bg-white'}`}
+            className="rounded-3xl shadow-2xl p-8 bg-white"
           >
             <div className="text-center mb-8">
               <motion.div
@@ -106,15 +104,15 @@ const Login = () => {
                 className="flex items-center justify-center gap-2 mb-4"
               >
                 <FaUtensils className="text-4xl text-primary-500" />
-                <span className={`font-display text-3xl font-bold ${isDark ? 'text-white' : 'text-darkText'}`}>
+                <span className="font-display text-3xl font-bold text-darkText">
                   RestoGo
                 </span>
                 <span className="text-primary-500 text-sm font-bold">BÉNIN</span>
               </motion.div>
-              <h1 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-darkText'}`}>
+              <h1 className="text-2xl font-bold text-darkText">
                 Bienvenue
               </h1>
-              <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className="text-sm mt-1 text-gray-500">
                 Connectez-vous pour découvrir les meilleurs restaurants
               </p>
             </div>
@@ -123,9 +121,7 @@ const Login = () => {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`text-sm p-3 rounded-xl mb-4 ${
-                  isDark ? 'bg-red-900/50 text-red-300' : 'bg-red-50 text-red-500'
-                }`}
+                className="text-sm p-3 rounded-xl mb-4 bg-red-50 text-red-500"
               >
                 {loginError}
               </motion.div>
@@ -134,20 +130,20 @@ const Login = () => {
             <button
               onClick={handleGoogleLogin}
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-3 py-3 rounded-xl transition border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
+              className="w-full flex items-center justify-center gap-3 py-3 rounded-xl transition border-2 border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
             >
               <FaGoogle className="text-red-500 text-xl" />
-              <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+              <span className="text-sm font-medium text-gray-700">
                 Continuer avec Google
               </span>
             </button>
 
             <div className="relative mb-6">
               <div className="absolute inset-0 flex items-center">
-                <div className={`w-full border-t ${isDark ? 'border-gray-700' : 'border-gray-200'}`} />
+                <div className="w-full border-t border-gray-200" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className={`px-4 ${isDark ? 'bg-gray-800 text-gray-400' : 'bg-white text-gray-500'}`}>
+                <span className="px-4 bg-white text-gray-500">
                   ou avec votre email
                 </span>
               </div>
@@ -155,23 +151,17 @@ const Login = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium mb-1 ${
-                  isDark ? 'text-gray-300' : 'text-gray-700'
-                }`}>
+                <label className="block text-sm font-medium mb-1 text-gray-700">
                   Email
                 </label>
-                <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 ${
-                  isDark ? 'bg-gray-700' : 'bg-gray-50'
-                } ${errors.email ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-500'}`}>
+                <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 bg-gray-50 ${errors.email ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-500'}`}>
                   <FaEnvelope className={`${errors.email ? 'text-red-500' : 'text-gray-400'} mr-3`} />
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`flex-1 bg-transparent outline-none ${
-                      isDark ? 'text-white' : 'text-gray-700'
-                    } placeholder-gray-400`}
+                    className="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-400"
                     placeholder="votre@email.com"
                   />
                 </div>
@@ -179,29 +169,23 @@ const Login = () => {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium mb-1 ${
-                  isDark ? 'text-gray-300' : 'text-gray-700'
-                }`}>
+                <label className="block text-sm font-medium mb-1 text-gray-700">
                   Mot de passe
                 </label>
-                <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 ${
-                  isDark ? 'bg-gray-700' : 'bg-gray-50'
-                } ${errors.password ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-500'}`}>
+                <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 bg-gray-50 ${errors.password ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-500'}`}>
                   <FaLock className={`${errors.password ? 'text-red-500' : 'text-gray-400'} mr-3`} />
                   <input
                     type={showPassword ? 'text' : 'password'}
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className={`flex-1 bg-transparent outline-none ${
-                      isDark ? 'text-white' : 'text-gray-700'
-                    } placeholder-gray-400`}
+                    className="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-400"
                     placeholder="••••••••"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className={`${isDark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'}`}
+                    className="text-gray-400 hover:text-gray-600"
                   >
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
                   </button>
@@ -210,9 +194,7 @@ const Login = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <label className={`flex items-center gap-2 text-sm cursor-pointer ${
-                  isDark ? 'text-gray-300' : 'text-gray-600'
-                }`}>
+                <label className="flex items-center gap-2 text-sm cursor-pointer text-gray-600">
                   <input
                     type="checkbox"
                     name="remember"
@@ -222,9 +204,7 @@ const Login = () => {
                   />
                   Se souvenir de moi
                 </label>
-                <Link to="/forgot-password" className={`text-sm transition ${
-                  isDark ? 'text-primary-400 hover:text-primary-300' : 'text-primary-500 hover:text-primary-600'
-                } font-medium`}>
+                <Link to="/forgot-password" className="text-sm transition text-primary-500 hover:text-primary-600 font-medium">
                   Mot de passe oublié ?
                 </Link>
               </div>
@@ -249,7 +229,7 @@ const Login = () => {
             </form>
 
             <div className="mt-6 text-center">
-              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className="text-sm text-gray-500">
                 Pas encore de compte ?{' '}
                 <Link to="/register" className="text-primary-500 hover:underline font-medium transition">
                   S'inscrire

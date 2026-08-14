@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FaStore, FaUtensils, FaMapMarkerAlt, FaPhone, FaWhatsapp, FaClock, FaImage, FaCheckCircle } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import { useToast } from '../context/ToastContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -15,7 +14,6 @@ const API_URL = RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL}/api
 const BecomeRestaurateur = () => {
   const navigate = useNavigate();
   const { token } = useAuth();
-  const { isDark } = useTheme();
   const { showToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -101,36 +99,30 @@ const BecomeRestaurateur = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`rounded-3xl shadow-2xl p-6 sm:p-8 ${isDark ? 'bg-gray-800' : 'bg-white'}`}
+            className="rounded-3xl shadow-2xl p-6 sm:p-8 bg-white"
           >
             <div className="text-center mb-8">
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
-                isDark ? 'bg-gray-700' : 'bg-primary-50'
-              }`}>
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 bg-primary-50">
                 <FaStore className="text-2xl text-primary-500" />
               </div>
-              <h1 className={`font-display text-2xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-darkText'}`}>
+              <h1 className="font-display text-2xl sm:text-3xl font-bold text-darkText">
                 Ajouter mon restaurant
               </h1>
-              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} mt-2`}>
+              <p className="text-gray-500 mt-2">
                 Remplissez les informations de votre restaurant
               </p>
             </div>
 
             {error && (
-              <div className={`p-3 rounded-xl mb-4 ${
-                isDark ? 'bg-red-900/50 text-red-300' : 'bg-red-50 text-red-500'
-              }`}>
+              <div className="p-3 rounded-xl mb-4 bg-red-50 text-red-500">
                 {error}
               </div>
             )}
 
             {success && (
-              <div className={`p-4 rounded-xl mb-4 ${
-                isDark ? 'bg-green-900/50 text-green-300' : 'bg-green-50 text-green-700'
-              }`}>
+              <div className="p-4 rounded-xl mb-4 bg-green-50 text-green-700">
                 <p className="font-medium">{success}</p>
-                <p className={`text-sm mt-1 ${isDark ? 'text-green-400' : 'text-green-600'}`}>
+                <p className="text-sm mt-1 text-green-600">
                   Redirection vers la gestion de votre restaurant...
                 </p>
               </div>
@@ -138,19 +130,15 @@ const BecomeRestaurateur = () => {
 
             {/* ✅ NOUVEAU MESSAGE INFORMATIF */}
             {!success && (
-              <div className={`p-4 rounded-xl mb-6 border-2 border-dashed ${
-                isDark ? 'border-primary-500/50 bg-primary-900/20 text-primary-300' : 'border-primary-300 bg-primary-50 text-primary-700'
-              }`}>
+              <div className="p-4 rounded-xl mb-6 border-2 border-dashed border-primary-300 bg-primary-50 text-primary-700">
                 <div className="flex items-start gap-3">
                   <FaImage className="text-2xl text-primary-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium">📸 Ajoutez vos photos après la création</p>
-                    <p className={`text-sm mt-1 ${isDark ? 'text-primary-400' : 'text-primary-600'}`}>
+                    <p className="text-sm mt-1 text-primary-600">
                       Une fois votre restaurant créé, vous pourrez ajouter des photos depuis la page <strong>"Mon restaurant"</strong> dans votre tableau de bord.
                     </p>
-                    <div className={`flex items-center gap-2 mt-2 text-xs ${
-                      isDark ? 'text-primary-400' : 'text-primary-600'
-                    }`}>
+                    <div className="flex items-center gap-2 mt-2 text-xs text-primary-600">
                       <FaCheckCircle />
                       <span>Créez votre restaurant</span>
                       <span className="mx-1">→</span>
@@ -169,9 +157,7 @@ const BecomeRestaurateur = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Nom du restaurant */}
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-sm font-medium mb-1 text-gray-700">
                     Nom du restaurant *
                   </label>
                   <input
@@ -180,18 +166,14 @@ const BecomeRestaurateur = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className={`w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 ${
-                      isDark ? 'bg-gray-700 text-white' : 'bg-gray-50 text-gray-700'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-gray-50 text-gray-700"
                     placeholder="Ex: La Maison Dorée"
                   />
                 </div>
 
                 {/* Adresse */}
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-sm font-medium mb-1 text-gray-700">
                     Adresse *
                   </label>
                   <input
@@ -200,9 +182,7 @@ const BecomeRestaurateur = () => {
                     value={formData.address}
                     onChange={handleChange}
                     required
-                    className={`w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 ${
-                      isDark ? 'bg-gray-700 text-white' : 'bg-gray-50 text-gray-700'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-gray-50 text-gray-700"
                     placeholder="Ex: 123 Boulevard de la Mer, Cotonou"
                   />
                 </div>
@@ -210,9 +190,7 @@ const BecomeRestaurateur = () => {
                 {/* Localisation */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className={`block text-sm font-medium mb-1 ${
-                      isDark ? 'text-gray-300' : 'text-gray-700'
-                    }`}>
+                    <label className="block text-sm font-medium mb-1 text-gray-700">
                       Latitude *
                     </label>
                     <input
@@ -222,15 +200,11 @@ const BecomeRestaurateur = () => {
                       value={formData.latitude}
                       onChange={handleChange}
                       required
-                      className={`w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 ${
-                        isDark ? 'bg-gray-700 text-white' : 'bg-gray-50 text-gray-700'
-                      }`}
+                      className="w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-gray-50 text-gray-700"
                     />
                   </div>
                   <div>
-                    <label className={`block text-sm font-medium mb-1 ${
-                      isDark ? 'text-gray-300' : 'text-gray-700'
-                    }`}>
+                    <label className="block text-sm font-medium mb-1 text-gray-700">
                       Longitude *
                     </label>
                     <input
@@ -240,18 +214,14 @@ const BecomeRestaurateur = () => {
                       value={formData.longitude}
                       onChange={handleChange}
                       required
-                      className={`w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 ${
-                        isDark ? 'bg-gray-700 text-white' : 'bg-gray-50 text-gray-700'
-                      }`}
+                      className="w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-gray-50 text-gray-700"
                     />
                   </div>
                 </div>
 
                 {/* Type de cuisine */}
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-sm font-medium mb-1 text-gray-700">
                     Type de cuisine *
                   </label>
                   <select
@@ -259,9 +229,7 @@ const BecomeRestaurateur = () => {
                     value={formData.cuisine_type}
                     onChange={handleChange}
                     required
-                    className={`w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 ${
-                      isDark ? 'bg-gray-700 text-white' : 'bg-gray-50 text-gray-700'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-gray-50 text-gray-700"
                   >
                     <option value="">Sélectionnez un type</option>
                     {cuisineTypes.map(type => (
@@ -272,9 +240,7 @@ const BecomeRestaurateur = () => {
 
                 {/* Fourchette de prix */}
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-sm font-medium mb-1 text-gray-700">
                     Fourchette de prix *
                   </label>
                   <select
@@ -282,9 +248,7 @@ const BecomeRestaurateur = () => {
                     value={formData.price_range}
                     onChange={handleChange}
                     required
-                    className={`w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 ${
-                      isDark ? 'bg-gray-700 text-white' : 'bg-gray-50 text-gray-700'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-gray-50 text-gray-700"
                   >
                     <option value="">Sélectionnez une fourchette</option>
                     {priceRanges.map(range => (
@@ -295,9 +259,7 @@ const BecomeRestaurateur = () => {
 
                 {/* Description */}
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-sm font-medium mb-1 text-gray-700">
                     Description
                   </label>
                   <textarea
@@ -305,9 +267,7 @@ const BecomeRestaurateur = () => {
                     value={formData.description}
                     onChange={handleChange}
                     rows="3"
-                    className={`w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 ${
-                      isDark ? 'bg-gray-700 text-white' : 'bg-gray-50 text-gray-700'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-gray-50 text-gray-700"
                     placeholder="Décrivez votre restaurant..."
                   />
                 </div>
@@ -315,9 +275,7 @@ const BecomeRestaurateur = () => {
                 {/* Téléphone et WhatsApp */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className={`block text-sm font-medium mb-1 ${
-                      isDark ? 'text-gray-300' : 'text-gray-700'
-                    }`}>
+                    <label className="block text-sm font-medium mb-1 text-gray-700">
                       Téléphone
                     </label>
                     <input
@@ -325,16 +283,12 @@ const BecomeRestaurateur = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 ${
-                        isDark ? 'bg-gray-700 text-white' : 'bg-gray-50 text-gray-700'
-                      }`}
+                      className="w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-gray-50 text-gray-700"
                       placeholder="+229 XX XX XX XX"
                     />
                   </div>
                   <div>
-                    <label className={`block text-sm font-medium mb-1 ${
-                      isDark ? 'text-gray-300' : 'text-gray-700'
-                    }`}>
+                    <label className="block text-sm font-medium mb-1 text-gray-700">
                       WhatsApp
                     </label>
                     <input
@@ -342,9 +296,7 @@ const BecomeRestaurateur = () => {
                       name="whatsapp"
                       value={formData.whatsapp}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 ${
-                        isDark ? 'bg-gray-700 text-white' : 'bg-gray-50 text-gray-700'
-                      }`}
+                      className="w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-gray-50 text-gray-700"
                       placeholder="+229 XX XX XX XX"
                     />
                   </div>
@@ -352,9 +304,7 @@ const BecomeRestaurateur = () => {
 
                 {/* Horaires d'ouverture */}
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-sm font-medium mb-1 text-gray-700">
                     Horaires d'ouverture
                   </label>
                   <input
@@ -362,25 +312,19 @@ const BecomeRestaurateur = () => {
                     name="opening_hours"
                     value={formData.opening_hours}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 ${
-                      isDark ? 'bg-gray-700 text-white' : 'bg-gray-50 text-gray-700'
-                    }`}
+                    className="w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-gray-50 text-gray-700"
                     placeholder="Ex: Lun - Sam: 11:00 - 22:30"
                   />
                 </div>
 
                 {/* Services */}
                 <div>
-                  <label className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-sm font-medium mb-2 text-gray-700">
                     Services
                   </label>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                     {serviceOptions.map(service => (
-                      <label key={service} className={`flex items-center gap-2 text-sm ${
-                        isDark ? 'text-gray-300' : 'text-gray-700'
-                      }`}>
+                      <label key={service} className="flex items-center gap-2 text-sm text-gray-700">
                         <input
                           type="checkbox"
                           name="services"
@@ -397,16 +341,12 @@ const BecomeRestaurateur = () => {
 
                 {/* Ambiance */}
                 <div>
-                  <label className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-sm font-medium mb-2 text-gray-700">
                     Ambiance
                   </label>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                     {ambianceOptions.map(ambiance => (
-                      <label key={ambiance} className={`flex items-center gap-2 text-sm ${
-                        isDark ? 'text-gray-300' : 'text-gray-700'
-                      }`}>
+                      <label key={ambiance} className="flex items-center gap-2 text-sm text-gray-700">
                         <input
                           type="checkbox"
                           name="ambiance"

@@ -2,17 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaPlus, FaTrash, FaImage, FaSpinner } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
-import { useTheme } from '../../context/ThemeContext';
 import { useToast } from '../../context/ToastContext';
 
-// ✅ CORRECTION : Utilisation de la variable d'environnement
 const API_URL = import.meta.env.VITE_API_URL 
     ? `${import.meta.env.VITE_API_URL}/api` 
     : 'http://localhost:8000/api';
 
 const PhotoManager = ({ restaurantId }) => {
   const { token, isAuthenticated, user } = useAuth();
-  const { isDark } = useTheme();
   const { showToast } = useToast();
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -113,8 +110,8 @@ const PhotoManager = ({ restaurantId }) => {
       {isAuthenticated && user?.is_restaurateur && (
         <div className="mb-4">
           <label className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl cursor-pointer transition ${
-            isDark ? 'bg-gray-700 hover:bg-gray-600 text-gray-200' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-          } ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+            uploading ? 'opacity-50 cursor-not-allowed' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+          }`}>
             <FaPlus />
             <span>Ajouter une photo</span>
             <input
@@ -131,9 +128,9 @@ const PhotoManager = ({ restaurantId }) => {
 
       {/* Grille de photos */}
       {photos.length === 0 ? (
-        <div className={`text-center py-8 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+        <div className="text-center py-8 rounded-xl bg-gray-50">
           <FaImage className="text-4xl text-gray-400 mx-auto mb-2" />
-          <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+          <p className="text-sm text-gray-500">
             Aucune photo.
           </p>
         </div>
@@ -147,7 +144,6 @@ const PhotoManager = ({ restaurantId }) => {
               className="relative group rounded-xl overflow-hidden aspect-square"
             >
               <img
-                // ✅ CORRECTION : Utilisation de API_URL pour les images
                 src={`${API_URL.replace('/api', '')}${photo.image_url}`}
                 alt="Restaurant"
                 className="w-full h-full object-cover"

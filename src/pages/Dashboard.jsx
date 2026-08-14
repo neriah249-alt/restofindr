@@ -8,7 +8,6 @@ import {
   FaSpinner, FaShare, FaWhatsapp, FaPhone, FaMapMarkerAlt
 } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import { useToast } from '../context/ToastContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -20,7 +19,6 @@ const API_URL = RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL}/api
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user, token } = useAuth();
-  const { isDark } = useTheme();
   const { showToast } = useToast();
   const [stats, setStats] = useState(null);
   const [activities, setActivities] = useState([]);
@@ -151,7 +149,7 @@ const Dashboard = () => {
         <main className="pt-24 pb-12 min-h-screen flex items-center justify-center">
           <div className="text-center">
             <FaSpinner className="animate-spin text-4xl text-primary-500 mx-auto mb-4" />
-            <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Chargement du tableau de bord...</p>
+            <p className="text-gray-500">Chargement du tableau de bord...</p>
           </div>
         </main>
         <Footer />
@@ -172,10 +170,10 @@ const Dashboard = () => {
               className="text-center py-20"
             >
               <div className="text-6xl mb-4">🔑</div>
-              <h2 className={`text-2xl font-display ${isDark ? 'text-white' : 'text-darkText'} mb-2`}>
+              <h2 className="text-2xl font-display text-darkText mb-2">
                 Vous n'êtes pas restaurateur
               </h2>
-              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} mb-6 max-w-md mx-auto`}>
+              <p className="text-gray-500 mb-6 max-w-md mx-auto">
                 Devenez restaurateur pour ajouter votre restaurant et accéder aux statistiques.
               </p>
               <button
@@ -205,10 +203,10 @@ const Dashboard = () => {
               className="text-center py-20"
             >
               <div className="text-6xl mb-4">🍽️</div>
-              <h2 className={`text-2xl font-display ${isDark ? 'text-white' : 'text-darkText'} mb-2`}>
+              <h2 className="text-2xl font-display text-darkText mb-2">
                 Vous n'avez pas encore de restaurant
               </h2>
-              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} mb-6 max-w-md mx-auto`}>
+              <p className="text-gray-500 mb-6 max-w-md mx-auto">
                 Ajoutez votre restaurant pour commencer à recevoir des avis et des clients.
               </p>
               <Link to="/become-restaurateur">
@@ -238,10 +236,10 @@ const Dashboard = () => {
             className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
           >
             <div>
-              <h1 className={`font-display text-3xl font-bold ${isDark ? 'text-white' : 'text-darkText'}`}>
+              <h1 className="font-display text-3xl font-bold text-darkText">
                 📊 Tableau de bord
               </h1>
-              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className="text-gray-500">
                 {stats?.restaurant?.name ? `Gérez votre restaurant "${stats.restaurant.name}"` : 'Gérez votre restaurant'}
               </p>
             </div>
@@ -249,7 +247,7 @@ const Dashboard = () => {
               <button
                 onClick={fetchDashboardData}
                 disabled={isRefreshing}
-                className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition flex items-center gap-2 text-sm disabled:opacity-50"
+                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition flex items-center gap-2 text-sm disabled:opacity-50"
               >
                 {isRefreshing ? <FaSpinner className="animate-spin" /> : <FaChartLine />}
                 {isRefreshing ? 'Actualisation...' : 'Actualiser'}
@@ -263,7 +261,7 @@ const Dashboard = () => {
           </motion.div>
 
           {error && (
-            <div className={`p-4 rounded-xl mb-6 ${isDark ? 'bg-red-900/30 text-red-300' : 'bg-red-50 text-red-500'}`}>
+            <div className="p-4 rounded-xl mb-6 bg-red-50 text-red-500">
               {error}
             </div>
           )}
@@ -276,16 +274,16 @@ const Dashboard = () => {
               transition={{ delay: 0.1 }}
               whileHover={{ scale: 1.02, y: -4 }}
               whileTap={{ scale: 0.98 }}
-              className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg cursor-pointer transition-all duration-200`}
+              className="p-6 rounded-2xl bg-white shadow-lg cursor-pointer transition-all duration-200"
               onClick={handleViewReviews}
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center text-yellow-600 dark:text-yellow-400">
+                <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600">
                   <FaStar />
                 </div>
                 <div>
                   <div className="text-2xl font-bold">{stats?.stats?.avg_rating || 0}</div>
-                  <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Note moyenne</div>
+                  <div className="text-sm text-gray-500">Note moyenne</div>
                 </div>
               </div>
             </motion.div>
@@ -296,16 +294,16 @@ const Dashboard = () => {
               transition={{ delay: 0.2 }}
               whileHover={{ scale: 1.02, y: -4 }}
               whileTap={{ scale: 0.98 }}
-              className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg cursor-pointer transition-all duration-200`}
+              className="p-6 rounded-2xl bg-white shadow-lg cursor-pointer transition-all duration-200"
               onClick={handleViewReviews}
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400">
+                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
                   <FaComment />
                 </div>
                 <div>
                   <div className="text-2xl font-bold">{stats?.stats?.total_reviews || 0}</div>
-                  <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Avis reçus</div>
+                  <div className="text-sm text-gray-500">Avis reçus</div>
                 </div>
               </div>
             </motion.div>
@@ -316,16 +314,16 @@ const Dashboard = () => {
               transition={{ delay: 0.3 }}
               whileHover={{ scale: 1.02, y: -4 }}
               whileTap={{ scale: 0.98 }}
-              className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg cursor-pointer transition-all duration-200`}
+              className="p-6 rounded-2xl bg-white shadow-lg cursor-pointer transition-all duration-200"
               onClick={() => navigate('/favorites')}
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center text-red-600 dark:text-red-400">
+                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center text-red-600">
                   <FaHeart />
                 </div>
                 <div>
                   <div className="text-2xl font-bold">{stats?.stats?.total_favorites || 0}</div>
-                  <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Favoris</div>
+                  <div className="text-sm text-gray-500">Favoris</div>
                 </div>
               </div>
             </motion.div>
@@ -336,16 +334,16 @@ const Dashboard = () => {
               transition={{ delay: 0.4 }}
               whileHover={{ scale: 1.02, y: -4 }}
               whileTap={{ scale: 0.98 }}
-              className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg cursor-pointer transition-all duration-200`}
+              className="p-6 rounded-2xl bg-white shadow-lg cursor-pointer transition-all duration-200"
               onClick={handleViewReviews}
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-green-600 dark:text-green-400">
+                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600">
                   <FaChartLine />
                 </div>
                 <div>
                   <div className="text-2xl font-bold">{stats?.stats?.total_reviews || 0}</div>
-                  <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Total avis</div>
+                  <div className="text-sm text-gray-500">Total avis</div>
                 </div>
               </div>
             </motion.div>
@@ -360,32 +358,32 @@ const Dashboard = () => {
           >
             <button
               onClick={handleShareRestaurant}
-              className={`p-3 rounded-xl ${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'} shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2 text-sm`}
+              className="p-3 rounded-xl bg-white hover:bg-gray-50 shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2 text-sm"
             >
               <FaShare className="text-primary-500" /> Partager
             </button>
             <button
               onClick={handleWhatsApp}
-              className={`p-3 rounded-xl ${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'} shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2 text-sm`}
+              className="p-3 rounded-xl bg-white hover:bg-gray-50 shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2 text-sm"
             >
               <FaWhatsapp className="text-green-500" /> WhatsApp
             </button>
             <button
               onClick={handleGoogleMaps}
-              className={`p-3 rounded-xl ${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'} shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2 text-sm`}
+              className="p-3 rounded-xl bg-white hover:bg-gray-50 shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2 text-sm"
             >
               <FaMapMarkerAlt className="text-primary-500" /> Localisation
             </button>
             <button
               onClick={handleViewReviews}
-              className={`p-3 rounded-xl ${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'} shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2 text-sm`}
+              className="p-3 rounded-xl bg-white hover:bg-gray-50 shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2 text-sm"
             >
               <FaComment className="text-blue-500" /> Avis
             </button>
             <button
               onClick={handleDeleteRestaurant}
               disabled={isDeleting}
-              className={`p-3 rounded-xl ${isDark ? 'bg-gray-800 hover:bg-red-900/30' : 'bg-white hover:bg-red-50'} shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2 text-sm text-red-500 disabled:opacity-50`}
+              className="p-3 rounded-xl bg-white hover:bg-red-50 shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2 text-sm text-red-500 disabled:opacity-50"
             >
               {isDeleting ? <FaSpinner className="animate-spin" /> : <FaTrash />}
               {isDeleting ? 'Suppression...' : 'Supprimer'}
@@ -397,9 +395,9 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}
+            className="p-6 rounded-2xl bg-white shadow-lg"
           >
-            <h3 className={`font-display text-lg font-bold ${isDark ? 'text-white' : 'text-darkText'} mb-4 flex items-center gap-2`}>
+            <h3 className="font-display text-lg font-bold text-darkText mb-4 flex items-center gap-2">
               <FaClock /> Activités récentes
             </h3>
             {activities.length > 0 ? (
@@ -411,19 +409,19 @@ const Dashboard = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 * index }}
                     whileHover={{ scale: 1.01 }}
-                    className={`flex items-center gap-3 p-3 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'} transition-all duration-200`}
+                    className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 transition-all duration-200"
                   >
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${
-                      activity.type === 'review' ? 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400' :
-                      'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'
+                      activity.type === 'review' ? 'bg-yellow-100 text-yellow-600' :
+                      'bg-red-100 text-red-600'
                     }`}>
                       {activity.type === 'review' ? <FaStar /> : <FaHeart />}
                     </div>
                     <div className="flex-1">
-                      <div className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+                      <div className="text-sm text-gray-700">
                         {activity.message}
                       </div>
-                      <div className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                      <div className="text-xs text-gray-400">
                         {activity.created_at ? new Date(activity.created_at).toLocaleDateString('fr-FR', {
                           day: '2-digit', month: '2-digit', year: 'numeric',
                           hour: '2-digit', minute: '2-digit'
@@ -434,7 +432,7 @@ const Dashboard = () => {
                 ))}
               </div>
             ) : (
-              <p className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className="text-center py-8 text-gray-500">
                 Aucune activité récente
               </p>
             )}

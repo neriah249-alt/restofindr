@@ -6,7 +6,6 @@ import {
   FaWhatsapp, FaClock, FaImage, FaSpinner
 } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import { useToast } from '../context/ToastContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -20,7 +19,6 @@ const API_URL = import.meta.env.VITE_API_URL
 
 const MyRestaurant = () => {
   const { token, user } = useAuth();
-  const { isDark } = useTheme();
   const { showToast } = useToast();
   const navigate = useNavigate();
   const [restaurant, setRestaurant] = useState(null);
@@ -89,7 +87,7 @@ const MyRestaurant = () => {
         <main className="pt-24 pb-12 min-h-screen flex items-center justify-center">
           <div className="text-center">
             <FaSpinner className="animate-spin text-4xl text-primary-500 mx-auto mb-4" />
-            <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Chargement...</p>
+            <p className="text-gray-500">Chargement...</p>
           </div>
         </main>
         <Footer />
@@ -103,7 +101,7 @@ const MyRestaurant = () => {
         <Navbar />
         <main className="pt-24 pb-12 min-h-screen flex items-center justify-center">
           <div className="text-center">
-            <h2 className={`text-2xl font-display ${isDark ? 'text-white' : 'text-darkText'} mb-2`}>
+            <h2 className="text-2xl font-display text-darkText mb-2">
               {error}
             </h2>
             <Link to="/become-restaurateur">
@@ -126,15 +124,15 @@ const MyRestaurant = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`rounded-3xl shadow-2xl p-6 sm:p-8 ${isDark ? 'bg-gray-800' : 'bg-white'}`}
+            className="rounded-3xl shadow-2xl p-6 sm:p-8 bg-white"
           >
             {/* En-tête */}
             <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
               <div>
-                <h1 className={`font-display text-2xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-darkText'}`}>
+                <h1 className="font-display text-2xl sm:text-3xl font-bold text-darkText">
                   Mon restaurant
                 </h1>
-                <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                <p className="text-gray-500">
                   Gérez votre restaurant et ses photos
                 </p>
               </div>
@@ -159,38 +157,38 @@ const MyRestaurant = () => {
             {restaurant && (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                  <div className={`p-4 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                    <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Nom</div>
-                    <div className={`font-medium text-lg ${isDark ? 'text-white' : 'text-darkText'}`}>
+                  <div className="p-4 rounded-xl bg-gray-50">
+                    <div className="text-sm text-gray-500">Nom</div>
+                    <div className="font-medium text-lg text-darkText">
                       {restaurant.name}
                     </div>
                   </div>
 
-                  <div className={`p-4 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                    <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Cuisine</div>
-                    <div className={`font-medium text-lg ${isDark ? 'text-white' : 'text-darkText'}`}>
+                  <div className="p-4 rounded-xl bg-gray-50">
+                    <div className="text-sm text-gray-500">Cuisine</div>
+                    <div className="font-medium text-lg text-darkText">
                       {restaurant.cuisine_type}
                     </div>
                   </div>
 
-                  <div className={`p-4 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                    <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Prix</div>
-                    <div className={`font-medium text-lg text-primary-500`}>
+                  <div className="p-4 rounded-xl bg-gray-50">
+                    <div className="text-sm text-gray-500">Prix</div>
+                    <div className="font-medium text-lg text-primary-500">
                       {restaurant.price_range}
                     </div>
                   </div>
 
-                  <div className={`p-4 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                    <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Note</div>
-                    <div className={`font-medium text-lg flex items-center gap-2 ${isDark ? 'text-white' : 'text-darkText'}`}>
+                  <div className="p-4 rounded-xl bg-gray-50">
+                    <div className="text-sm text-gray-500">Note</div>
+                    <div className="font-medium text-lg flex items-center gap-2 text-darkText">
                       <FaStar className="text-yellow-400" />
                       {restaurant.rating || 0} ({restaurant.review_count || 0} avis)
                     </div>
                   </div>
 
-                  <div className={`p-4 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'} md:col-span-2`}>
-                    <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Adresse</div>
-                    <div className={`font-medium ${isDark ? 'text-white' : 'text-darkText'}`}>
+                  <div className="p-4 rounded-xl bg-gray-50 md:col-span-2">
+                    <div className="text-sm text-gray-500">Adresse</div>
+                    <div className="font-medium text-darkText">
                       <FaMapMarkerAlt className="inline text-primary-500 mr-2" />
                       {restaurant.address}
                     </div>
@@ -200,12 +198,12 @@ const MyRestaurant = () => {
                 {/* ========================================== */}
                 {/* 📸 SECTION PHOTOS - AJOUTÉE ICI */}
                 {/* ========================================== */}
-                <div className={`mt-6 p-6 rounded-2xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                  <h2 className={`font-display text-xl font-bold ${isDark ? 'text-white' : 'text-darkText'} mb-4 flex items-center gap-2`}>
+                <div className="mt-6 p-6 rounded-2xl bg-gray-50">
+                  <h2 className="font-display text-xl font-bold text-darkText mb-4 flex items-center gap-2">
                     <FaImage className="text-primary-500" />
                     📸 Photos du restaurant
                   </h2>
-                  <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-4`}>
+                  <p className="text-sm text-gray-500 mb-4">
                     Ajoutez des photos pour montrer votre restaurant aux clients.
                   </p>
                   <PhotoManager restaurantId={restaurant.id} />

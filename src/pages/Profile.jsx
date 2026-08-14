@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
@@ -14,7 +13,6 @@ const API_URL = RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL}/api
 const Profile = () => {
   const navigate = useNavigate();
   const { user, logout, token } = useAuth();
-  const { isDark } = useTheme();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -71,7 +69,7 @@ const Profile = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`rounded-3xl shadow-2xl overflow-hidden ${isDark ? 'bg-gray-800' : 'bg-white'}`}
+            className="rounded-3xl shadow-2xl overflow-hidden bg-white"
           >
             {/* En-tête avec avatar initiales */}
             <div className="bg-primary-500 px-8 py-12 text-center">
@@ -93,52 +91,52 @@ const Profile = () => {
               {message && (
                 <div className={`p-3 rounded-xl text-center ${
                   message.includes('✅') 
-                    ? 'bg-green-50 dark:bg-green-900/50 text-green-500 dark:text-green-300' 
-                    : 'bg-red-50 dark:bg-red-900/50 text-red-500 dark:text-red-300'
+                    ? 'bg-green-50 text-green-500' 
+                    : 'bg-red-50 text-red-500'
                 }`}>
                   {message}
                 </div>
               )}
 
-              <div className={`flex items-center gap-4 p-4 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50">
                 <FaUser className="text-primary-500" />
                 <div>
-                  <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Nom</div>
-                  <div className={`font-medium ${isDark ? 'text-white' : 'text-darkText'}`}>{user?.name}</div>
+                  <div className="text-sm text-gray-500">Nom</div>
+                  <div className="font-medium text-darkText">{user?.name}</div>
                 </div>
               </div>
 
-              <div className={`flex items-center gap-4 p-4 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50">
                 <FaEnvelope className="text-primary-500" />
                 <div>
-                  <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Email</div>
-                  <div className={`font-medium ${isDark ? 'text-white' : 'text-darkText'}`}>{user?.email}</div>
+                  <div className="text-sm text-gray-500">Email</div>
+                  <div className="font-medium text-darkText">{user?.email}</div>
                 </div>
               </div>
 
               {user?.is_restaurateur && (
-                <div className={`flex items-center gap-4 p-4 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50">
                   <FaMapMarkerAlt className="text-primary-500" />
                   <div>
-                    <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Statut</div>
-                    <div className={`font-medium text-green-500`}>🍽️ Restaurateur</div>
+                    <div className="text-sm text-gray-500">Statut</div>
+                    <div className="font-medium text-green-500">🍽️ Restaurateur</div>
                   </div>
                 </div>
               )}
 
-              <div className={`flex items-center gap-4 p-4 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50">
                 <FaHeart className="text-red-500" />
                 <div>
-                  <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Favoris</div>
-                  <div className={`font-medium ${isDark ? 'text-white' : 'text-darkText'}`}>0 restaurants</div>
+                  <div className="text-sm text-gray-500">Favoris</div>
+                  <div className="font-medium text-darkText">0 restaurants</div>
                 </div>
               </div>
 
-              <div className={`flex items-center gap-4 p-4 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50">
                 <FaUtensils className="text-primary-500" />
                 <div>
-                  <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Restaurants visités</div>
-                  <div className={`font-medium ${isDark ? 'text-white' : 'text-darkText'}`}>0 restaurants</div>
+                  <div className="text-sm text-gray-500">Restaurants visités</div>
+                  <div className="font-medium text-darkText">0 restaurants</div>
                 </div>
               </div>
 

@@ -3,10 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaStar, FaMapMarkerAlt, FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
-import { useTheme } from '../../context/ThemeContext';
 import { getFeaturedRestaurants, getFavorites, toggleFavorite } from '../../services/api';
 
-// ✅ CORRECTION
 const API_URL = import.meta.env.VITE_API_URL 
     ? `${import.meta.env.VITE_API_URL}/api` 
     : 'http://localhost:8000/api';
@@ -14,7 +12,6 @@ const API_URL = import.meta.env.VITE_API_URL
 const PopularRestaurants = () => {
   const navigate = useNavigate();
   const { token, isAuthenticated } = useAuth();
-  const { isDark } = useTheme();
   const [favorites, setFavorites] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -70,7 +67,6 @@ const PopularRestaurants = () => {
     },
   ];
 
-  // Fonction pour récupérer les photos des restaurants
   const fetchPhotosForRestaurants = async (restaurantsList) => {
     const restaurantsWithPhotos = await Promise.all(
       restaurantsList.map(async (resto) => {
@@ -95,8 +91,6 @@ const PopularRestaurants = () => {
       try {
         const data = await getFeaturedRestaurants();
         let restaurantsData = data && data.length > 0 ? data : demoRestaurants;
-        
-        // Charger les photos pour chaque restaurant
         const restaurantsWithPhotos = await fetchPhotosForRestaurants(restaurantsData);
         setRestaurants(restaurantsWithPhotos);
       } catch (error) {
@@ -146,24 +140,20 @@ const PopularRestaurants = () => {
     navigate(`/restaurant/${restaurantId}`);
   };
 
-  // Fonction pour obtenir l'URL de l'image
   const getImageUrl = (restaurant) => {
-    // Si le restaurant a des photos uploadées, utiliser la première
     if (restaurant.photos && restaurant.photos.length > 0) {
-      // ✅ CORRECTION : Utiliser l'URL de l'API
       return `${API_URL.replace('/api', '')}${restaurant.photos[0].image_url}`;
     }
-    // Sinon utiliser l'image par défaut
     return restaurant.image_url || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop';
   };
 
   if (loading) {
     return (
-      <section className="py-12 sm:py-16 bg-white dark:bg-gray-800">
+      <section className="py-12 sm:py-16 bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="bg-gray-100 dark:bg-gray-700 rounded-2xl h-64 sm:h-80 animate-pulse" />
+              <div key={i} className="bg-gray-100 rounded-2xl h-64 sm:h-80 animate-pulse" />
             ))}
           </div>
         </div>
@@ -172,7 +162,7 @@ const PopularRestaurants = () => {
   }
 
   return (
-    <section className="py-12 sm:py-16 bg-white dark:bg-gray-800">
+    <section className="py-12 sm:py-16 bg-white">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -182,10 +172,10 @@ const PopularRestaurants = () => {
           className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mb-6 sm:mb-10"
         >
           <div>
-            <h2 className={`font-display text-2xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-darkText'} mb-1 sm:mb-2`}>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-darkText mb-1 sm:mb-2">
               Restaurants populaires
             </h2>
-            <p className={`text-sm sm:text-base ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+            <p className="text-sm sm:text-base text-gray-500">
               Les meilleures adresses sélectionnées pour vous
             </p>
           </div>
@@ -211,9 +201,7 @@ const PopularRestaurants = () => {
                 transition={{ duration: 0.4, delay: index * 0.1 }}
                 whileHover={{ y: -8 }}
                 onClick={() => handleRestaurantClick(restaurant.id)}
-                className={`group relative rounded-2xl overflow-hidden shadow-card cursor-pointer border ${
-                  isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'
-                }`}
+                className="group relative rounded-2xl overflow-hidden shadow-card cursor-pointer border bg-white border-gray-100"
               >
                 <div className="relative h-40 sm:h-48 overflow-hidden">
                   <img
@@ -253,27 +241,25 @@ const PopularRestaurants = () => {
                 
                 <div className="p-3 sm:p-5">
                   <div className="flex justify-between items-start mb-1">
-                    <h3 className={`font-display font-semibold text-sm sm:text-base ${isDark ? 'text-white' : 'text-darkText'} group-hover:text-primary-500 transition-colors`}>
+                    <h3 className="font-display font-semibold text-sm sm:text-base text-darkText group-hover:text-primary-500 transition-colors">
                       {restaurant.name}
                     </h3>
-                    <div className={`flex items-center gap-1 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full ${
-                      isDark ? 'bg-gray-700' : 'bg-primary-50'
-                    }`}>
+                    <div className="flex items-center gap-1 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full bg-primary-50">
                       <FaStar className="text-yellow-400 text-[10px] sm:text-sm" />
-                      <span className={`text-[10px] sm:text-sm font-medium ${isDark ? 'text-white' : 'text-darkText'}`}>
+                      <span className="text-[10px] sm:text-sm font-medium text-darkText">
                         {restaurant.rating || 0}
                       </span>
-                      <span className={`text-[8px] sm:text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                      <span className="text-[8px] sm:text-xs text-gray-400">
                         ({restaurant.review_count || 0})
                       </span>
                     </div>
                   </div>
                   
-                  <p className={`text-xs sm:text-sm mb-1 sm:mb-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <p className="text-xs sm:text-sm mb-1 sm:mb-2 text-gray-500">
                     {restaurant.cuisine_type || 'Cuisine variée'}
                   </p>
                   
-                  <div className={`flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-500">
                     <div className="flex items-center gap-1">
                       <FaMapMarkerAlt className="text-primary-500 text-[10px] sm:text-xs" />
                       <span>{restaurant.distance || '0 km'}</span>

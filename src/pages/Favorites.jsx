@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaStar, FaMapMarkerAlt, FaHeart, FaTrash } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
@@ -13,7 +12,6 @@ const API_URL = RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL}/api
 
 const Favorites = () => {
   const { token } = useAuth();
-  const { isDark } = useTheme();
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -64,7 +62,7 @@ const Favorites = () => {
         <main className="pt-24 pb-12 min-h-screen flex items-center justify-center">
           <div className="text-center">
             <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Chargement des favoris...</p>
+            <p className="text-gray-500">Chargement des favoris...</p>
           </div>
         </main>
         <Footer />
@@ -79,10 +77,10 @@ const Favorites = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
             <div>
-              <h1 className={`font-display text-3xl font-bold ${isDark ? 'text-white' : 'text-darkText'}`}>
+              <h1 className="font-display text-3xl font-bold text-darkText">
                 Mes favoris
               </h1>
-              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className="text-gray-500">
                 {favorites.length} restaurants sauvegardés
               </p>
             </div>
@@ -94,11 +92,11 @@ const Favorites = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-20"
             >
-              <FaHeart className={`text-6xl mx-auto mb-4 ${isDark ? 'text-gray-600' : 'text-gray-300'}`} />
-              <h2 className={`text-2xl font-display mb-2 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              <FaHeart className="text-6xl mx-auto mb-4 text-gray-300" />
+              <h2 className="text-2xl font-display mb-2 text-gray-600">
                 Aucun favori
               </h2>
-              <p className={`${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+              <p className="text-gray-400">
                 Commencez à sauvegarder vos restaurants préférés
               </p>
               <Link to="/search">
@@ -115,9 +113,7 @@ const Favorites = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition ${
-                    isDark ? 'bg-gray-800' : 'bg-white'
-                  }`}
+                  className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition bg-white"
                 >
                   <div className="relative">
                     <img 
@@ -134,15 +130,15 @@ const Favorites = () => {
                   </div>
                   <div className="p-5">
                     <Link to={`/restaurant/${restaurant.id}`}>
-                      <h3 className={`font-display font-semibold text-lg ${isDark ? 'text-white' : 'text-darkText'} hover:text-primary-500 transition`}>
+                      <h3 className="font-display font-semibold text-lg text-darkText hover:text-primary-500 transition">
                         {restaurant.name}
                       </h3>
                     </Link>
-                    <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                    <p className="text-sm text-gray-500">
                       {restaurant.cuisine_type}
                     </p>
                     <div className="flex items-center gap-4 mt-3 text-sm">
-                      <div className={`flex items-center gap-1 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                      <div className="flex items-center gap-1 text-gray-600">
                         <FaStar className="text-yellow-400" />
                         <span>{restaurant.rating || 0}</span>
                       </div>

@@ -3,13 +3,11 @@ import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaLock, FaGoogle, FaEye, FaEyeSlash, FaCheckCircle, FaUtensils } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
 
 const Register = () => {
   const navigate = useNavigate();
   const { register, loginWithGoogle } = useAuth();
-  const { isDark } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -83,7 +81,7 @@ const Register = () => {
         setIsSuccess(true);
         console.log('✅ Inscription réussie, redirection vers Home');
         setTimeout(() => {
-          navigate('/');  // ← Redirection vers Home
+          navigate('/');
         }, 1500);
       } else {
         setRegisterError(result.error || 'Erreur d\'inscription');
@@ -103,7 +101,7 @@ const Register = () => {
       const result = await loginWithGoogle();
       if (result.success) {
         console.log('✅ Connexion Google réussie, redirection vers Home');
-        navigate('/');  // ← Redirection vers Home
+        navigate('/');
       } else {
         setRegisterError(result.error || 'Erreur de connexion avec Google');
       }
@@ -122,21 +120,21 @@ const Register = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className={`rounded-3xl shadow-2xl p-8 ${isDark ? 'bg-gray-800' : 'bg-white'}`}
+            className="rounded-3xl shadow-2xl p-8 bg-white"
           >
             {/* Logo */}
             <div className="text-center mb-8">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <FaUtensils className="text-4xl text-primary-500" />
-                <span className={`font-display text-3xl font-bold ${isDark ? 'text-white' : 'text-darkText'}`}>
+                <span className="font-display text-3xl font-bold text-darkText">
                   RestoGo
                 </span>
                 <span className="text-primary-500 text-sm font-bold">BÉNIN</span>
               </div>
-              <h1 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-darkText'}`}>
+              <h1 className="text-2xl font-bold text-darkText">
                 Créer un compte
               </h1>
-              <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className="text-sm mt-1 text-gray-500">
                 Rejoignez RestoGo Bénin gratuitement
               </p>
             </div>
@@ -145,14 +143,12 @@ const Register = () => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className={`p-4 rounded-xl mb-4 flex items-center gap-3 ${
-                  isDark ? 'bg-green-900/50 text-green-300' : 'bg-green-50 text-green-700'
-                }`}
+                className="p-4 rounded-xl mb-4 flex items-center gap-3 bg-green-50 text-green-700"
               >
                 <FaCheckCircle className="text-green-500 text-xl flex-shrink-0" />
                 <div>
                   <p className="font-medium">Inscription réussie !</p>
-                  <p className={`text-sm ${isDark ? 'text-green-400' : 'text-green-600'}`}>
+                  <p className="text-sm text-green-600">
                     Redirection vers l'accueil...
                   </p>
                 </div>
@@ -163,9 +159,7 @@ const Register = () => {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`text-sm p-3 rounded-xl mb-4 ${
-                  isDark ? 'bg-red-900/50 text-red-300' : 'bg-red-50 text-red-500'
-                }`}
+                className="text-sm p-3 rounded-xl mb-4 bg-red-50 text-red-500"
               >
                 {registerError}
               </motion.div>
@@ -175,10 +169,10 @@ const Register = () => {
             <button
               onClick={handleGoogleLogin}
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-3 py-3 rounded-xl transition border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
+              className="w-full flex items-center justify-center gap-3 py-3 rounded-xl transition border-2 border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
             >
               <FaGoogle className="text-red-500 text-xl" />
-              <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+              <span className="text-sm font-medium text-gray-700">
                 S'inscrire avec Google
               </span>
             </button>
@@ -186,10 +180,10 @@ const Register = () => {
             {/* Séparateur */}
             <div className="relative mb-6">
               <div className="absolute inset-0 flex items-center">
-                <div className={`w-full border-t ${isDark ? 'border-gray-700' : 'border-gray-200'}`} />
+                <div className="w-full border-t border-gray-200" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className={`px-4 ${isDark ? 'bg-gray-800 text-gray-400' : 'bg-white text-gray-500'}`}>
+                <span className="px-4 bg-white text-gray-500">
                   ou avec votre email
                 </span>
               </div>
@@ -198,23 +192,17 @@ const Register = () => {
             {/* Formulaire */}
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className={`block text-sm font-medium mb-1 ${
-                  isDark ? 'text-gray-300' : 'text-gray-700'
-                }`}>
+                <label className="block text-sm font-medium mb-1 text-gray-700">
                   Nom complet
                 </label>
-                <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 ${
-                  isDark ? 'bg-gray-700' : 'bg-gray-50'
-                } ${errors.name ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-500'}`}>
+                <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 bg-gray-50 ${errors.name ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-500'}`}>
                   <FaUser className={`${errors.name ? 'text-red-500' : 'text-gray-400'} mr-3`} />
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`flex-1 bg-transparent outline-none ${
-                      isDark ? 'text-white' : 'text-gray-700'
-                    } placeholder-gray-400`}
+                    className="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-400"
                     placeholder="Jean Dupont"
                   />
                 </div>
@@ -222,23 +210,17 @@ const Register = () => {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium mb-1 ${
-                  isDark ? 'text-gray-300' : 'text-gray-700'
-                }`}>
+                <label className="block text-sm font-medium mb-1 text-gray-700">
                   Email
                 </label>
-                <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 ${
-                  isDark ? 'bg-gray-700' : 'bg-gray-50'
-                } ${errors.email ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-500'}`}>
+                <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 bg-gray-50 ${errors.email ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-500'}`}>
                   <FaEnvelope className={`${errors.email ? 'text-red-500' : 'text-gray-400'} mr-3`} />
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`flex-1 bg-transparent outline-none ${
-                      isDark ? 'text-white' : 'text-gray-700'
-                    } placeholder-gray-400`}
+                    className="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-400"
                     placeholder="votre@email.com"
                   />
                 </div>
@@ -246,29 +228,23 @@ const Register = () => {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium mb-1 ${
-                  isDark ? 'text-gray-300' : 'text-gray-700'
-                }`}>
+                <label className="block text-sm font-medium mb-1 text-gray-700">
                   Mot de passe
                 </label>
-                <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 ${
-                  isDark ? 'bg-gray-700' : 'bg-gray-50'
-                } ${errors.password ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-500'}`}>
+                <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 bg-gray-50 ${errors.password ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-500'}`}>
                   <FaLock className={`${errors.password ? 'text-red-500' : 'text-gray-400'} mr-3`} />
                   <input
                     type={showPassword ? 'text' : 'password'}
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className={`flex-1 bg-transparent outline-none ${
-                      isDark ? 'text-white' : 'text-gray-700'
-                    } placeholder-gray-400`}
+                    className="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-400"
                     placeholder="••••••••"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className={`${isDark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'}`}
+                    className="text-gray-400 hover:text-gray-600"
                   >
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
                   </button>
@@ -277,29 +253,23 @@ const Register = () => {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium mb-1 ${
-                  isDark ? 'text-gray-300' : 'text-gray-700'
-                }`}>
+                <label className="block text-sm font-medium mb-1 text-gray-700">
                   Confirmer le mot de passe
                 </label>
-                <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 ${
-                  isDark ? 'bg-gray-700' : 'bg-gray-50'
-                } ${errors.confirmPassword ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-500'}`}>
+                <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 bg-gray-50 ${errors.confirmPassword ? 'ring-2 ring-red-500' : 'focus-within:ring-2 focus-within:ring-primary-500'}`}>
                   <FaLock className={`${errors.confirmPassword ? 'text-red-500' : 'text-gray-400'} mr-3`} />
                   <input
                     type={showConfirmPassword ? 'text' : 'password'}
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className={`flex-1 bg-transparent outline-none ${
-                      isDark ? 'text-white' : 'text-gray-700'
-                    } placeholder-gray-400`}
+                    className="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-400"
                     placeholder="••••••••"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className={`${isDark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'}`}
+                    className="text-gray-400 hover:text-gray-600"
                   >
                     {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                   </button>
@@ -316,7 +286,7 @@ const Register = () => {
                     onChange={handleChange}
                     className="w-4 h-4 text-primary-500 rounded border-gray-300 focus:ring-primary-500 mt-0.5"
                   />
-                  <span className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <span className="text-gray-600">
                     J'accepte les conditions d'utilisation
                   </span>
                 </label>
@@ -333,7 +303,7 @@ const Register = () => {
             </form>
 
             <div className="mt-6 text-center">
-              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className="text-sm text-gray-500">
                 Déjà inscrit ?{' '}
                 <Link to="/login" className="text-primary-500 hover:underline font-medium transition">
                   Se connecter

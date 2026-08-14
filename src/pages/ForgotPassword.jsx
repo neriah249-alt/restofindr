@@ -5,13 +5,11 @@ import { FaEnvelope, FaArrowLeft, FaCheckCircle } from 'react-icons/fa';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
-import { useTheme } from '../context/ThemeContext';
 
 const RAW_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 const API_URL = RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL}/api`;
 
 const ForgotPassword = () => {
-  const { isDark } = useTheme();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -65,18 +63,16 @@ const ForgotPassword = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`rounded-3xl shadow-2xl p-8 ${isDark ? 'bg-gray-800' : 'bg-white'}`}
+            className="rounded-3xl shadow-2xl p-8 bg-white"
           >
             <div className="text-center mb-8">
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
-                isDark ? 'bg-gray-700' : 'bg-primary-50'
-              }`}>
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 bg-primary-50">
                 <FaEnvelope className="text-2xl text-primary-500" />
               </div>
-              <h1 className={`font-display text-2xl font-bold ${isDark ? 'text-white' : 'text-darkText'}`}>
+              <h1 className="font-display text-2xl font-bold text-darkText">
                 Mot de passe oublié
               </h1>
-              <p className={`text-sm mt-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className="text-sm mt-2 text-gray-500">
                 Entrez votre email pour recevoir un lien de réinitialisation.
               </p>
             </div>
@@ -85,18 +81,16 @@ const ForgotPassword = () => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className={`p-4 rounded-xl mb-4 flex items-center gap-3 ${
-                  isDark ? 'bg-green-900/50 text-green-300' : 'bg-green-50 text-green-700'
-                }`}
+                className="p-4 rounded-xl mb-4 flex items-center gap-3 bg-green-50 text-green-700"
               >
                 <FaCheckCircle className="text-green-500 text-xl flex-shrink-0" />
                 <div>
                   <p className="font-medium">Email envoyé !</p>
-                  <p className={`text-sm ${isDark ? 'text-green-400' : 'text-green-600'}`}>
+                  <p className="text-sm text-green-600">
                     Un lien de réinitialisation a été envoyé à <span className="font-semibold">{email}</span>
                   </p>
                   {resetLink && (
-                    <p className={`text-xs mt-2 break-all ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                    <p className="text-xs mt-2 break-all text-gray-500">
                       🔗 Lien de test : <a href={resetLink} className="text-primary-500 hover:underline">{resetLink}</a>
                     </p>
                   )}
@@ -105,9 +99,7 @@ const ForgotPassword = () => {
             )}
 
             {error && (
-              <div className={`text-sm p-3 rounded-xl mb-4 ${
-                isDark ? 'bg-red-900/50 text-red-300' : 'bg-red-50 text-red-500'
-              }`}>
+              <div className="text-sm p-3 rounded-xl mb-4 bg-red-50 text-red-500">
                 {error}
               </div>
             )}
@@ -115,15 +107,11 @@ const ForgotPassword = () => {
             {!isSuccess && (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-sm font-medium mb-1 text-gray-700">
                     Email
                   </label>
-                  <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 ${
-                    isDark ? 'bg-gray-700' : 'bg-gray-50'
-                  }`}>
-                    <FaEnvelope className={`${isDark ? 'text-gray-500' : 'text-gray-400'} mr-3`} />
+                  <div className="flex items-center rounded-xl px-4 py-3 transition-all duration-200 bg-gray-50">
+                    <FaEnvelope className="text-gray-400 mr-3" />
                     <input
                       type="email"
                       value={email}
@@ -131,9 +119,7 @@ const ForgotPassword = () => {
                         setEmail(e.target.value);
                         setError('');
                       }}
-                      className={`flex-1 bg-transparent outline-none placeholder-gray-400 ${
-                        isDark ? 'text-white' : 'text-gray-700'
-                      }`}
+                      className="flex-1 bg-transparent outline-none placeholder-gray-400 text-gray-700"
                       placeholder="votre@email.com"
                     />
                   </div>
@@ -150,9 +136,7 @@ const ForgotPassword = () => {
             )}
 
             <div className="mt-6 text-center">
-              <Link to="/login" className={`inline-flex items-center gap-2 text-sm transition ${
-                isDark ? 'text-gray-400 hover:text-primary-500' : 'text-gray-500 hover:text-primary-500'
-              }`}>
+              <Link to="/login" className="inline-flex items-center gap-2 text-sm transition text-gray-500 hover:text-primary-500">
                 <FaArrowLeft className="text-xs" />
                 Retour à la connexion
               </Link>

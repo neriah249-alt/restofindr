@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import { useToast } from '../context/ToastContext';
 import { 
   FaUtensils, FaMapMarkerAlt, FaStar, FaUsers, 
@@ -17,7 +16,6 @@ import CategoriesSection from '../components/home/CategoriesSection';
 
 const Home = () => {
   const { isAuthenticated, user } = useAuth();
-  const { isDark } = useTheme();
   const navigate = useNavigate();
   const { showToast } = useToast();
 
@@ -92,22 +90,18 @@ const Home = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <div className={`inline-flex items-center gap-2 ${
-                  isDark ? 'bg-gray-800/80' : 'bg-white/80'
-                } backdrop-blur-sm px-4 py-2 rounded-full shadow-sm mb-6`}>
+                <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm mb-6">
                   <span className="text-xs font-semibold text-primary-500">BÉNIN</span>
-                  <span className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>•</span>
-                  <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Cotonou & Abomey-Calavi</span>
+                  <span className="text-xs text-gray-400">•</span>
+                  <span className="text-xs text-gray-500">Cotonou & Abomey-Calavi</span>
                 </div>
 
-                <h1 className={`font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 ${
-                  isDark ? 'text-white' : 'text-darkText'
-                }`}>
+                <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-darkText">
                   Découvrez les meilleurs
                   <span className="text-primary-500 block">restaurants du Bénin</span>
                 </h1>
 
-                <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'} mb-8 max-w-lg`}>
+                <p className="text-lg text-gray-600 mb-8 max-w-lg">
                   Trouvez le restaurant parfait selon vos envies, votre budget et votre humeur. 
                   Explorez une sélection unique de restaurants à Cotonou et Abomey-Calavi.
                 </p>
@@ -129,11 +123,7 @@ const Home = () => {
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className={`px-8 py-4 rounded-full font-medium shadow-lg hover:shadow-xl transition ${
-                          isDark 
-                            ? 'bg-gray-700 text-white hover:bg-gray-600' 
-                            : 'bg-white text-gray-700 hover:bg-gray-50'
-                        }`}
+                        className="px-8 py-4 rounded-full font-medium shadow-lg hover:shadow-xl transition bg-white text-gray-700 hover:bg-gray-50"
                       >
                         Explorer
                       </motion.button>
@@ -155,11 +145,7 @@ const Home = () => {
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className={`px-8 py-4 rounded-full font-medium shadow-lg hover:shadow-xl transition ${
-                          isDark 
-                            ? 'bg-gray-700 text-white hover:bg-gray-600' 
-                            : 'bg-white text-gray-700 hover:bg-gray-50'
-                        }`}
+                        className="px-8 py-4 rounded-full font-medium shadow-lg hover:shadow-xl transition bg-white text-gray-700 hover:bg-gray-50"
                       >
                         Créer mon compte
                       </motion.button>
@@ -176,13 +162,13 @@ const Home = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 + index * 0.1 }}
                       whileHover={{ scale: 1.05, y: -4 }}
-                      className={`${isDark ? 'bg-gray-800/80' : 'bg-white/80'} backdrop-blur-sm rounded-xl p-4 text-center cursor-pointer transition-all duration-200`}
+                      className="bg-white/80 backdrop-blur-sm rounded-xl p-4 text-center cursor-pointer transition-all duration-200"
                     >
                       <div className="text-2xl text-primary-500 flex justify-center">{stat.icon}</div>
-                      <div className={`text-xl font-bold ${isDark ? 'text-white' : 'text-darkText'}`}>
+                      <div className="text-xl font-bold text-darkText">
                         {stat.value}
                       </div>
-                      <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                      <div className="text-xs text-gray-500">
                         {stat.label}
                       </div>
                     </motion.div>
@@ -208,7 +194,7 @@ const Home = () => {
                   <motion.div
                     animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    className={`absolute bottom-4 left-4 ${isDark ? 'bg-gray-800/90' : 'bg-white/90'} backdrop-blur-sm rounded-xl p-3 shadow-lg cursor-pointer`}
+                    className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-xl p-3 shadow-lg cursor-pointer"
                     onClick={() => navigate('/search')}
                   >
                     <div className="flex items-center gap-3">
@@ -216,10 +202,10 @@ const Home = () => {
                         <FaStar />
                       </div>
                       <div>
-                        <div className={`text-sm font-semibold ${isDark ? 'text-white' : 'text-darkText'}`}>
+                        <div className="text-sm font-semibold text-darkText">
                           4.8 / 5
                         </div>
-                        <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                        <div className="text-xs text-gray-500">
                           Note moyenne
                         </div>
                       </div>
@@ -227,28 +213,18 @@ const Home = () => {
                   </motion.div>
                 </div>
 
-                <div className={`absolute -bottom-6 -right-6 rounded-2xl shadow-xl p-4 ${
-                  isDark ? 'bg-gray-800' : 'bg-white'
-                }`}>
+                <div className="absolute -bottom-6 -right-6 rounded-2xl shadow-xl p-4 bg-white">
                   <div className="flex gap-3">
-                    <div className={`flex items-center gap-1 text-xs ${
-                      isDark ? 'text-gray-300' : 'text-gray-600'
-                    }`}>
+                    <div className="flex items-center gap-1 text-xs text-gray-600">
                       <FaWifi className="text-primary-500" /> WiFi
                     </div>
-                    <div className={`flex items-center gap-1 text-xs ${
-                      isDark ? 'text-gray-300' : 'text-gray-600'
-                    }`}>
+                    <div className="flex items-center gap-1 text-xs text-gray-600">
                       <FaParking className="text-primary-500" /> Parking
                     </div>
-                    <div className={`flex items-center gap-1 text-xs ${
-                      isDark ? 'text-gray-300' : 'text-gray-600'
-                    }`}>
+                    <div className="flex items-center gap-1 text-xs text-gray-600">
                       <FaSnowflake className="text-primary-500" /> Clim
                     </div>
-                    <div className={`flex items-center gap-1 text-xs ${
-                      isDark ? 'text-gray-300' : 'text-gray-600'
-                    }`}>
+                    <div className="flex items-center gap-1 text-xs text-gray-600">
                       <FaMusic className="text-primary-500" /> Live
                     </div>
                   </div>
@@ -259,7 +235,7 @@ const Home = () => {
         </section>
 
         {/* Features - INTERACTIFS */}
-        <section className={`py-20 ${isDark ? 'bg-gray-800/50' : 'bg-white/50'}`}>
+        <section className="py-20 bg-white/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -267,12 +243,10 @@ const Home = () => {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className={`font-display text-3xl font-bold mb-4 ${
-                isDark ? 'text-white' : 'text-darkText'
-              }`}>
+              <h2 className="font-display text-3xl font-bold mb-4 text-darkText">
                 Pourquoi choisir RestoGo ?
               </h2>
-              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} max-w-2xl mx-auto`}>
+              <p className="text-gray-500 max-w-2xl mx-auto">
                 Une plateforme conçue pour vous offrir la meilleure expérience culinaire au Bénin
               </p>
             </motion.div>
@@ -292,19 +266,15 @@ const Home = () => {
                   }}
                   whileTap={{ scale: 0.95 }}
                   onClick={feature.action}
-                  className={`rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group ${
-                    isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'
-                  }`}
+                  className="rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group bg-white hover:bg-gray-50"
                 >
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl text-primary-500 mx-auto mb-4 transition-transform duration-300 group-hover:scale-110 ${
-                    isDark ? 'bg-gray-700 group-hover:bg-gray-600' : 'bg-primary-50 group-hover:bg-primary-100'
-                  }`}>
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl text-primary-500 mx-auto mb-4 transition-transform duration-300 group-hover:scale-110 bg-primary-50 group-hover:bg-primary-100">
                     {feature.icon}
                   </div>
-                  <h3 className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-darkText'}`}>
+                  <h3 className="font-semibold mb-2 text-darkText">
                     {feature.title}
                   </h3>
-                  <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <p className="text-sm text-gray-500">
                     {feature.desc}
                   </p>
                   <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -352,24 +322,22 @@ const Home = () => {
 
         {/* Section "Mon espace" - Visible seulement si connecté */}
         {isAuthenticated && (
-          <section className="py-20 bg-green-50 dark:bg-green-900/20">
+          <section className="py-20 bg-green-50">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <div className="w-20 h-20 bg-green-100 dark:bg-green-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <div className="w-16 h-16 rounded-full bg-primary-500 text-white flex items-center justify-center text-2xl font-bold">
                     {userInitials}
                   </div>
                 </div>
-                <h2 className={`font-display text-3xl md:text-4xl font-bold mb-4 ${
-                  isDark ? 'text-white' : 'text-darkText'
-                }`}>
+                <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 text-darkText">
                   Bienvenue, {user?.name || 'Utilisateur'} ! 👋
                 </h2>
-                <p className={`text-lg mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                <p className="text-lg mb-8 text-gray-600">
                   Accédez à vos favoris, gérez vos restaurants et découvrez de nouvelles adresses.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
@@ -386,11 +354,7 @@ const Home = () => {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className={`px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition ${
-                        isDark 
-                          ? 'bg-gray-700 text-white hover:bg-gray-600' 
-                          : 'bg-white text-gray-700 hover:bg-gray-50'
-                      }`}
+                      className="px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition bg-white text-gray-700 hover:bg-gray-50"
                     >
                       Explorer les restaurants
                     </motion.button>

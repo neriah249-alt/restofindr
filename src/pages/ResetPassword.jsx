@@ -5,13 +5,11 @@ import { FaLock, FaEye, FaEyeSlash, FaCheckCircle } from 'react-icons/fa';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
-import { useTheme } from '../context/ThemeContext';
 
 const RAW_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 const API_URL = RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL}/api`;
 
 const ResetPassword = () => {
-  const { isDark } = useTheme();
   const { token } = useParams();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -113,18 +111,16 @@ const ResetPassword = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`rounded-3xl shadow-2xl p-8 ${isDark ? 'bg-gray-800' : 'bg-white'}`}
+            className="rounded-3xl shadow-2xl p-8 bg-white"
           >
             <div className="text-center mb-8">
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
-                isDark ? 'bg-gray-700' : 'bg-primary-50'
-              }`}>
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 bg-primary-50">
                 <FaLock className="text-2xl text-primary-500" />
               </div>
-              <h1 className={`font-display text-2xl font-bold ${isDark ? 'text-white' : 'text-darkText'}`}>
+              <h1 className="font-display text-2xl font-bold text-darkText">
                 Nouveau mot de passe
               </h1>
-              <p className={`text-sm mt-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className="text-sm mt-2 text-gray-500">
                 Créez un nouveau mot de passe sécurisé.
               </p>
             </div>
@@ -133,14 +129,12 @@ const ResetPassword = () => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className={`p-4 rounded-xl mb-4 flex items-center gap-3 ${
-                  isDark ? 'bg-green-900/50 text-green-300' : 'bg-green-50 text-green-700'
-                }`}
+                className="p-4 rounded-xl mb-4 flex items-center gap-3 bg-green-50 text-green-700"
               >
                 <FaCheckCircle className="text-green-500 text-xl flex-shrink-0" />
                 <div>
                   <p className="font-medium">Mot de passe réinitialisé !</p>
-                  <p className={`text-sm ${isDark ? 'text-green-400' : 'text-green-600'}`}>
+                  <p className="text-sm text-green-600">
                     Redirection vers la connexion...
                   </p>
                 </div>
@@ -148,9 +142,7 @@ const ResetPassword = () => {
             )}
 
             {error && (
-              <div className={`text-sm p-3 rounded-xl mb-4 ${
-                isDark ? 'bg-red-900/50 text-red-300' : 'bg-red-50 text-red-500'
-              }`}>
+              <div className="text-sm p-3 rounded-xl mb-4 bg-red-50 text-red-500">
                 {error}
               </div>
             )}
@@ -158,29 +150,23 @@ const ResetPassword = () => {
             {!isSuccess && (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-sm font-medium mb-1 text-gray-700">
                     Nouveau mot de passe
                   </label>
-                  <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 ${
-                    isDark ? 'bg-gray-700' : 'bg-gray-50'
-                  }`}>
-                    <FaLock className={`${isDark ? 'text-gray-500' : 'text-gray-400'} mr-3`} />
+                  <div className="flex items-center rounded-xl px-4 py-3 transition-all duration-200 bg-gray-50">
+                    <FaLock className="text-gray-400 mr-3" />
                     <input
                       type={showPassword ? 'text' : 'password'}
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
-                      className={`flex-1 bg-transparent outline-none placeholder-gray-400 ${
-                        isDark ? 'text-white' : 'text-gray-700'
-                      }`}
+                      className="flex-1 bg-transparent outline-none placeholder-gray-400 text-gray-700"
                       placeholder="••••••••"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className={`${isDark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'}`}
+                      className="text-gray-400 hover:text-gray-600"
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </button>
@@ -199,10 +185,10 @@ const ResetPassword = () => {
                           />
                         ))}
                       </div>
-                      <p className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                      <p className="text-xs mt-1 text-gray-500">
                         Force : <span className="font-medium">{passwordStrength.label}</span>
                       </p>
-                      <ul className={`text-xs mt-1 space-y-0.5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                      <ul className="text-xs mt-1 space-y-0.5 text-gray-400">
                         <li className={formData.password.length >= 6 ? 'text-green-500' : ''}>
                           • Minimum 6 caractères
                         </li>
@@ -218,29 +204,23 @@ const ResetPassword = () => {
                 </div>
 
                 <div>
-                  <label className={`block text-sm font-medium mb-1 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <label className="block text-sm font-medium mb-1 text-gray-700">
                     Confirmer le mot de passe
                   </label>
-                  <div className={`flex items-center rounded-xl px-4 py-3 transition-all duration-200 ${
-                    isDark ? 'bg-gray-700' : 'bg-gray-50'
-                  }`}>
-                    <FaLock className={`${isDark ? 'text-gray-500' : 'text-gray-400'} mr-3`} />
+                  <div className="flex items-center rounded-xl px-4 py-3 transition-all duration-200 bg-gray-50">
+                    <FaLock className="text-gray-400 mr-3" />
                     <input
                       type={showConfirmPassword ? 'text' : 'password'}
                       name="confirmPassword"
                       value={formData.confirmPassword}
                       onChange={handleChange}
-                      className={`flex-1 bg-transparent outline-none placeholder-gray-400 ${
-                        isDark ? 'text-white' : 'text-gray-700'
-                      }`}
+                      className="flex-1 bg-transparent outline-none placeholder-gray-400 text-gray-700"
                       placeholder="••••••••"
                     />
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className={`${isDark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'}`}
+                      className="text-gray-400 hover:text-gray-600"
                     >
                       {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                     </button>
@@ -263,9 +243,7 @@ const ResetPassword = () => {
             )}
 
             <div className="mt-6 text-center">
-              <Link to="/login" className={`text-sm transition ${
-                isDark ? 'text-gray-400 hover:text-primary-500' : 'text-gray-500 hover:text-primary-500'
-              }`}>
+              <Link to="/login" className="text-sm transition text-gray-500 hover:text-primary-500">
                 Retour à la connexion
               </Link>
             </div>

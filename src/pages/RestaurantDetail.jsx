@@ -9,7 +9,6 @@ import {
   FaCalendarCheck
 } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import { useToast } from '../context/ToastContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -48,7 +47,6 @@ const RestaurantDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { token, isAuthenticated, user } = useAuth();
-  const { isDark } = useTheme();
   const { showToast } = useToast();
   const [restaurant, setRestaurant] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -169,7 +167,7 @@ const RestaurantDetail = () => {
         <main className="pt-24 pb-12 min-h-screen flex items-center justify-center">
           <div className="text-center">
             <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Chargement...</p>
+            <p className="text-gray-500">Chargement...</p>
           </div>
         </main>
         <Footer />
@@ -183,10 +181,10 @@ const RestaurantDetail = () => {
         <Navbar />
         <main className="pt-24 pb-12 min-h-screen flex items-center justify-center">
           <div className="text-center">
-            <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-darkText'} mb-2`}>
+            <h2 className="text-2xl font-bold text-darkText mb-2">
               Restaurant non trouvé
             </h2>
-            <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+            <p className="text-gray-500">
               Le restaurant que vous recherchez n'existe pas.
             </p>
             <Link to="/search" className="btn-primary mt-4 inline-block">
@@ -204,12 +202,12 @@ const RestaurantDetail = () => {
       <Navbar />
       <main className="pt-20 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link to="/search" className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-primary-500 transition mb-4">
+          <Link to="/search" className="inline-flex items-center gap-2 text-gray-600 hover:text-primary-500 transition mb-4">
             <FaArrowLeft /> Retour
           </Link>
 
           {error && (
-            <div className={`p-3 rounded-xl mb-4 ${isDark ? 'bg-yellow-900/30 text-yellow-300' : 'bg-yellow-50 text-yellow-700'}`}>
+            <div className="p-3 rounded-xl mb-4 bg-yellow-50 text-yellow-700">
               {error}
             </div>
           )}
@@ -267,7 +265,7 @@ const RestaurantDetail = () => {
               className={`px-4 py-2 rounded-full text-sm font-medium transition whitespace-nowrap ${
                 activeTab === 'info' 
                   ? 'bg-primary-500 text-white' 
-                  : `${isDark ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-white text-gray-700 hover:bg-gray-100'}`
+                  : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
             >
               Informations
@@ -277,7 +275,7 @@ const RestaurantDetail = () => {
               className={`px-4 py-2 rounded-full text-sm font-medium transition whitespace-nowrap ${
                 activeTab === 'services' 
                   ? 'bg-primary-500 text-white' 
-                  : `${isDark ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-white text-gray-700 hover:bg-gray-100'}`
+                  : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
             >
               Services
@@ -287,7 +285,7 @@ const RestaurantDetail = () => {
               className={`px-4 py-2 rounded-full text-sm font-medium transition whitespace-nowrap ${
                 activeTab === 'ambiance' 
                   ? 'bg-primary-500 text-white' 
-                  : `${isDark ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-white text-gray-700 hover:bg-gray-100'}`
+                  : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
             >
               Ambiance
@@ -297,7 +295,7 @@ const RestaurantDetail = () => {
               className={`px-4 py-2 rounded-full text-sm font-medium transition whitespace-nowrap ${
                 activeTab === 'map' 
                   ? 'bg-primary-500 text-white' 
-                  : `${isDark ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-white text-gray-700 hover:bg-gray-100'}`
+                  : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
             >
               📍 Localisation
@@ -313,44 +311,44 @@ const RestaurantDetail = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}
+                  className="p-6 rounded-2xl bg-white shadow-lg"
                 >
-                  <h2 className={`font-display text-xl font-bold ${isDark ? 'text-white' : 'text-darkText'} mb-3`}>
+                  <h2 className="font-display text-xl font-bold text-darkText mb-3">
                     À propos
                   </h2>
-                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
+                  <p className="text-gray-600 leading-relaxed">
                     {restaurant.description || 'Aucune description disponible.'}
                   </p>
 
                   <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {restaurant.phone && (
-                      <div className={`flex items-center gap-3 p-3 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                      <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-50">
                         <FaPhone className="text-primary-500" />
                         <div>
-                          <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Téléphone</div>
-                          <a href={`tel:${restaurant.phone}`} className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'} hover:text-primary-500`}>
+                          <div className="text-xs text-gray-500">Téléphone</div>
+                          <a href={`tel:${restaurant.phone}`} className="text-sm text-gray-700 hover:text-primary-500">
                             {restaurant.phone}
                           </a>
                         </div>
                       </div>
                     )}
                     {restaurant.whatsapp && (
-                      <div className={`flex items-center gap-3 p-3 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                      <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-50">
                         <FaWhatsapp className="text-green-500" />
                         <div>
-                          <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>WhatsApp</div>
-                          <a href={`https://wa.me/${restaurant.whatsapp}`} className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'} hover:text-green-500`}>
+                          <div className="text-xs text-gray-500">WhatsApp</div>
+                          <a href={`https://wa.me/${restaurant.whatsapp}`} className="text-sm text-gray-700 hover:text-green-500">
                             {restaurant.whatsapp}
                           </a>
                         </div>
                       </div>
                     )}
                     {restaurant.opening_hours && (
-                      <div className={`flex items-center gap-3 p-3 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-50'} sm:col-span-2`}>
+                      <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 sm:col-span-2">
                         <FaClock className="text-primary-500" />
                         <div>
-                          <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Horaires</div>
-                          <div className={`text-sm ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>{restaurant.opening_hours}</div>
+                          <div className="text-xs text-gray-500">Horaires</div>
+                          <div className="text-sm text-gray-700">{restaurant.opening_hours}</div>
                         </div>
                       </div>
                     )}
@@ -363,24 +361,22 @@ const RestaurantDetail = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}
+                  className="p-6 rounded-2xl bg-white shadow-lg"
                 >
-                  <h2 className={`font-display text-xl font-bold ${isDark ? 'text-white' : 'text-darkText'} mb-4`}>
+                  <h2 className="font-display text-xl font-bold text-darkText mb-4">
                     Services
                   </h2>
                   {restaurant.services && restaurant.services.length > 0 ? (
                     <div className="flex flex-wrap gap-3">
                       {restaurant.services.map((service, index) => (
-                        <span key={index} className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm ${
-                          isDark ? 'bg-primary-900/30 text-primary-300' : 'bg-primary-50 text-primary-600'
-                        }`}>
+                        <span key={index} className="flex items-center gap-2 px-4 py-2 rounded-full text-sm bg-primary-50 text-primary-600">
                           {serviceIcons[service] || <FaUtensils />}
                           {service}
                         </span>
                       ))}
                     </div>
                   ) : (
-                    <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Aucun service renseigné</p>
+                    <p className="text-gray-500">Aucun service renseigné</p>
                   )}
                 </motion.div>
               )}
@@ -390,24 +386,22 @@ const RestaurantDetail = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}
+                  className="p-6 rounded-2xl bg-white shadow-lg"
                 >
-                  <h2 className={`font-display text-xl font-bold ${isDark ? 'text-white' : 'text-darkText'} mb-4`}>
+                  <h2 className="font-display text-xl font-bold text-darkText mb-4">
                     Ambiance
                   </h2>
                   {restaurant.ambiance && restaurant.ambiance.length > 0 ? (
                     <div className="flex flex-wrap gap-3">
                       {restaurant.ambiance.map((item, index) => (
-                        <span key={index} className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm ${
-                          isDark ? 'bg-purple-900/30 text-purple-300' : 'bg-purple-50 text-purple-600'
-                        }`}>
+                        <span key={index} className="flex items-center gap-2 px-4 py-2 rounded-full text-sm bg-purple-50 text-purple-600">
                           {ambianceIcons[item] || <FaHeart />}
                           {item}
                         </span>
                       ))}
                     </div>
                   ) : (
-                    <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Aucune ambiance renseignée</p>
+                    <p className="text-gray-500">Aucune ambiance renseignée</p>
                   )}
                 </motion.div>
               )}
@@ -417,20 +411,20 @@ const RestaurantDetail = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}
+                  className="p-6 rounded-2xl bg-white shadow-lg"
                 >
-                  <h2 className={`font-display text-xl font-bold ${isDark ? 'text-white' : 'text-darkText'} mb-3`}>
+                  <h2 className="font-display text-xl font-bold text-darkText mb-3">
                     📍 Localisation
                   </h2>
                   
-                  <div className={`flex items-start gap-3 p-3 rounded-xl mb-4 ${isDark ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                  <div className="flex items-start gap-3 p-3 rounded-xl mb-4 bg-gray-50">
                     <FaMapMarkerAlt className="text-primary-500 mt-1" />
                     <div>
-                      <div className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <div className="text-sm text-gray-600">
                         {restaurant.address || 'Adresse non disponible'}
                       </div>
                       {restaurant.latitude && restaurant.longitude && (
-                        <div className={`text-xs mt-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                        <div className="text-xs mt-1 text-gray-400">
                           Lat: {restaurant.latitude}, Lng: {restaurant.longitude}
                         </div>
                       )}
@@ -453,12 +447,12 @@ const RestaurantDetail = () => {
                     </button>
                   </div>
 
-                  <div className={`mt-4 rounded-xl overflow-hidden h-48 flex items-center justify-center ${isDark ? 'bg-gray-700' : 'bg-gray-200'}`}>
+                  <div className="mt-4 rounded-xl overflow-hidden h-48 flex items-center justify-center bg-gray-200">
                     {restaurant.latitude && restaurant.longitude ? (
                       <div className="text-center">
                         <FaMapMarkerAlt className="text-5xl text-primary-500 mx-auto mb-2" />
-                        <p className={`font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{restaurant.name}</p>
-                        <p className={`text-sm ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{restaurant.address}</p>
+                        <p className="font-medium text-gray-600">{restaurant.name}</p>
+                        <p className="text-sm text-gray-400">{restaurant.address}</p>
                         <button
                           onClick={() => openGoogleMaps(restaurant.latitude, restaurant.longitude, restaurant.name)}
                           className="mt-2 text-sm text-primary-500 hover:text-primary-600 font-medium"
@@ -467,7 +461,7 @@ const RestaurantDetail = () => {
                         </button>
                       </div>
                     ) : (
-                      <p className={`${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Coordonnées non disponibles</p>
+                      <p className="text-gray-400">Coordonnées non disponibles</p>
                     )}
                   </div>
                 </motion.div>
@@ -476,8 +470,8 @@ const RestaurantDetail = () => {
 
             {/* Colonne latérale - Actions */}
             <div className="space-y-6">
-              <div className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-                <h2 className={`font-display text-lg font-bold ${isDark ? 'text-white' : 'text-darkText'} mb-4`}>
+              <div className="p-6 rounded-2xl bg-white shadow-lg">
+                <h2 className="font-display text-lg font-bold text-darkText mb-4">
                   Actions
                 </h2>
                 <div className="space-y-3">
@@ -507,7 +501,7 @@ const RestaurantDetail = () => {
                   )}
                   <button 
                     onClick={() => openGoogleMapsView(restaurant.latitude, restaurant.longitude)}
-                    className="w-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-3 rounded-xl font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition flex items-center justify-center gap-2"
+                    className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200 transition flex items-center justify-center gap-2"
                   >
                     <FaMapMarkerAlt /> Voir sur Google Maps
                   </button>
@@ -515,8 +509,8 @@ const RestaurantDetail = () => {
               </div>
 
               {/* Partager */}
-              <div className={`p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-                <h2 className={`font-display text-lg font-bold ${isDark ? 'text-white' : 'text-darkText'} mb-4`}>
+              <div className="p-6 rounded-2xl bg-white shadow-lg">
+                <h2 className="font-display text-lg font-bold text-darkText mb-4">
                   Partager
                 </h2>
                 <button 
@@ -532,9 +526,7 @@ const RestaurantDetail = () => {
                       showToast('🔗 Lien copié !', 'success');
                     }
                   }}
-                  className={`w-full py-3 rounded-xl font-medium transition flex items-center justify-center gap-2 ${
-                    isDark ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
+                  className="w-full py-3 rounded-xl font-medium transition flex items-center justify-center gap-2 bg-gray-100 text-gray-700 hover:bg-gray-200"
                 >
                   <FaShare /> Partager ce restaurant
                 </button>
@@ -544,8 +536,8 @@ const RestaurantDetail = () => {
 
           {/* SECTION PHOTOS - Visible uniquement pour le propriétaire */}
           {isAuthenticated && user?.is_restaurateur && restaurant?.owner_id === user?.id && (
-            <div className={`mt-8 p-6 rounded-2xl ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-              <h2 className={`font-display text-xl font-bold ${isDark ? 'text-white' : 'text-darkText'} mb-3`}>
+            <div className="mt-8 p-6 rounded-2xl bg-white shadow-lg">
+              <h2 className="font-display text-xl font-bold text-darkText mb-3">
                 📸 Photos du restaurant
               </h2>
               <PhotoManager restaurantId={id} />

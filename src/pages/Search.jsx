@@ -6,7 +6,6 @@ import {
   FaWallet, FaUsers, FaUtensils
 } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
@@ -16,7 +15,6 @@ const API_URL = RAW_API_URL.endsWith('/api') ? RAW_API_URL : `${RAW_API_URL}/api
 
 const Search = () => {
   const { isAuthenticated } = useAuth();
-  const { isDark } = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
   const [conversationalQuery, setConversationalQuery] = useState('');
   const [filters, setFilters] = useState({
@@ -266,7 +264,7 @@ const Search = () => {
           >
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
-                <div className="flex-1 flex items-center bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/20 dark:to-purple-900/20 rounded-2xl shadow-sm px-4 py-2 border border-primary-100 dark:border-primary-800">
+                <div className="flex-1 flex items-center bg-gradient-to-r from-primary-50 to-purple-50 rounded-2xl shadow-sm px-4 py-2 border border-primary-100">
                   <FaMagic className="text-primary-400 mr-3 text-lg" />
                   <input
                     type="text"
@@ -274,7 +272,7 @@ const Search = () => {
                     onChange={(e) => setConversationalQuery(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleConversationalSearch()}
                     placeholder="✨ Ex: 'Je cherche un restaurant romantique pour 2 personnes avec 15 000 FCFA à Cotonou'"
-                    className="flex-1 outline-none bg-transparent text-gray-700 dark:text-white placeholder-gray-400 text-sm"
+                    className="flex-1 outline-none bg-transparent text-gray-700 placeholder-gray-400 text-sm"
                   />
                   <button
                     onClick={handleConversationalSearch}
@@ -289,7 +287,7 @@ const Search = () => {
               
               {/* Message de recherche */}
               {searchMessage && (
-                <div className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                <div className="text-sm text-gray-600 flex items-center gap-2">
                   <span className="text-primary-500">✨</span>
                   {searchMessage}
                 </div>
@@ -298,19 +296,19 @@ const Search = () => {
               {/* Analyse de la recherche */}
               {searchAnalysis && searchAnalysis.keywords && searchAnalysis.keywords.length > 0 && (
                 <div className="flex flex-wrap items-center gap-2 text-xs">
-                  <span className="text-gray-400 dark:text-gray-500">🔍 Mots-clés détectés :</span>
+                  <span className="text-gray-400">🔍 Mots-clés détectés :</span>
                   {searchAnalysis.keywords.map((kw, i) => (
-                    <span key={i} className="px-2 py-0.5 bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-300 rounded-full">
+                    <span key={i} className="px-2 py-0.5 bg-primary-50 text-primary-600 rounded-full">
                       {kw}
                     </span>
                   ))}
                   {searchAnalysis.nb_personnes > 1 && (
-                    <span className="px-2 py-0.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 rounded-full">
+                    <span className="px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full">
                       👥 {searchAnalysis.nb_personnes} personnes
                     </span>
                   )}
                   {searchAnalysis.budget_total && (
-                    <span className="px-2 py-0.5 bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-300 rounded-full">
+                    <span className="px-2 py-0.5 bg-green-50 text-green-600 rounded-full">
                       💰 {searchAnalysis.budget_total.toLocaleString()} FCFA
                     </span>
                   )}
@@ -319,7 +317,7 @@ const Search = () => {
               
               {/* Suggestions de recherche conversationnelle */}
               <div className="flex flex-wrap gap-2">
-                <span className="text-xs text-gray-400 dark:text-gray-500 mr-1">Exemples :</span>
+                <span className="text-xs text-gray-400 mr-1">Exemples :</span>
                 {[
                   "Restaurant romantique pour 2",
                   "Maquis avec musique pas cher",
@@ -332,7 +330,7 @@ const Search = () => {
                       setConversationalQuery(example);
                       setTimeout(() => handleConversationalSearch(), 300);
                     }}
-                    className="text-xs px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition"
+                    className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-600 hover:bg-primary-50 transition"
                   >
                     {example}
                   </button>
@@ -348,7 +346,7 @@ const Search = () => {
             className="mb-6"
           >
             <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1 flex items-center bg-white dark:bg-gray-800 rounded-2xl shadow-lg px-4 py-3">
+              <div className="flex-1 flex items-center bg-white rounded-2xl shadow-lg px-4 py-3">
                 <FaSearch className="text-gray-400 mr-3" />
                 <input
                   type="text"
@@ -356,7 +354,7 @@ const Search = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                   placeholder="Rechercher un restaurant, une cuisine, une ville..."
-                  className="w-full outline-none bg-transparent text-gray-700 dark:text-white placeholder-gray-400"
+                  className="w-full outline-none bg-transparent text-gray-700 placeholder-gray-400"
                 />
                 <button 
                   onClick={() => handleSearch()}
@@ -365,9 +363,9 @@ const Search = () => {
                   Rechercher
                 </button>
               </div>
-              <button className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg px-6 py-3 hover:shadow-xl transition flex items-center gap-2">
+              <button className="bg-white rounded-2xl shadow-lg px-6 py-3 hover:shadow-xl transition flex items-center gap-2">
                 <FaFilter className="text-primary-500" />
-                <span className="hidden sm:inline dark:text-white">Filtres</span>
+                <span className="hidden sm:inline">Filtres</span>
               </button>
             </div>
           </motion.div>
@@ -382,7 +380,7 @@ const Search = () => {
             <button
               onClick={handleFindNearby}
               disabled={isLocating}
-              className="flex items-center gap-3 px-5 py-3 bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-300 rounded-xl hover:bg-primary-100 dark:hover:bg-primary-800/40 transition-all duration-300 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-3 px-5 py-3 bg-primary-50 text-primary-600 rounded-xl hover:bg-primary-100 transition-all duration-300 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLocating ? (
                 <>
@@ -397,7 +395,7 @@ const Search = () => {
               )}
             </button>
             {nearbyInfo && (
-              <p className="text-xs text-gray-400 dark:text-gray-500 mt-1 ml-1">
+              <p className="text-xs text-gray-400 mt-1 ml-1">
                 Restaurants à proximité de votre position
               </p>
             )}
@@ -410,7 +408,7 @@ const Search = () => {
               className={`px-4 py-2 rounded-full text-sm transition whitespace-nowrap ${
                 filters.city === 'all' 
                   ? 'bg-primary-500 text-white shadow-md' 
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
+                  : 'bg-white text-gray-700 hover:shadow-md'
               }`}
             >
               Toutes les villes
@@ -420,7 +418,7 @@ const Search = () => {
               className={`px-4 py-2 rounded-full text-sm transition whitespace-nowrap ${
                 filters.city === 'Cotonou' 
                   ? 'bg-primary-500 text-white shadow-md' 
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
+                  : 'bg-white text-gray-700 hover:shadow-md'
               }`}
             >
               Cotonou
@@ -430,7 +428,7 @@ const Search = () => {
               className={`px-4 py-2 rounded-full text-sm transition whitespace-nowrap ${
                 filters.city === 'Abomey-Calavi' 
                   ? 'bg-primary-500 text-white shadow-md' 
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
+                  : 'bg-white text-gray-700 hover:shadow-md'
               }`}
             >
               Abomey-Calavi
@@ -440,7 +438,7 @@ const Search = () => {
               className={`px-4 py-2 rounded-full text-sm transition whitespace-nowrap ${
                 filters.price === 'all' 
                   ? 'bg-primary-500 text-white shadow-md' 
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
+                  : 'bg-white text-gray-700 hover:shadow-md'
               }`}
             >
               Tous prix
@@ -450,7 +448,7 @@ const Search = () => {
               className={`px-4 py-2 rounded-full text-sm transition whitespace-nowrap ${
                 filters.price === '$' 
                   ? 'bg-primary-500 text-white shadow-md' 
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
+                  : 'bg-white text-gray-700 hover:shadow-md'
               }`}
             >
               {'<'} 10 000 FCFA
@@ -460,7 +458,7 @@ const Search = () => {
               className={`px-4 py-2 rounded-full text-sm transition whitespace-nowrap ${
                 filters.price === '$$' 
                   ? 'bg-primary-500 text-white shadow-md' 
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
+                  : 'bg-white text-gray-700 hover:shadow-md'
               }`}
             >
               10 000 - 20 000 FCFA
@@ -470,7 +468,7 @@ const Search = () => {
               className={`px-4 py-2 rounded-full text-sm transition whitespace-nowrap ${
                 filters.price === '$$$' 
                   ? 'bg-primary-500 text-white shadow-md' 
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
+                  : 'bg-white text-gray-700 hover:shadow-md'
               }`}
             >
               {'>'} 20 000 FCFA
@@ -480,7 +478,7 @@ const Search = () => {
               className={`px-4 py-2 rounded-full text-sm transition whitespace-nowrap ${
                 filters.openNow 
                   ? 'bg-green-500 text-white shadow-md' 
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
+                  : 'bg-white text-gray-700 hover:shadow-md'
               }`}
             >
               <FaClock className={`inline mr-1 ${filters.openNow ? 'text-white' : 'text-green-500'}`} />
@@ -490,9 +488,9 @@ const Search = () => {
 
           {/* ===== INFO PROXIMITÉ ===== */}
           {nearbyInfo && (
-            <div className="bg-primary-50 dark:bg-primary-900/30 p-3 rounded-xl mb-4 flex items-center gap-2">
+            <div className="bg-primary-50 p-3 rounded-xl mb-4 flex items-center gap-2">
               <FaMapMarkerAlt className="text-primary-500" />
-              <span className="text-sm text-gray-700 dark:text-gray-300">
+              <span className="text-sm text-gray-700">
                 Restaurants à proximité de votre position
               </span>
               <button 
@@ -509,7 +507,7 @@ const Search = () => {
 
           {/* ===== ERREURS ===== */}
           {error && (
-            <div className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 p-4 rounded-xl mb-4">
+            <div className="bg-red-50 text-red-600 p-4 rounded-xl mb-4">
               {error}
             </div>
           )}
@@ -517,7 +515,7 @@ const Search = () => {
           {/* ===== COMPTEUR ===== */}
           {searched && (
             <div className="mb-4">
-              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-sm`}>
+              <p className="text-gray-500 text-sm">
                 {loading ? 'Recherche en cours...' : `${displayedResults.length} restaurants trouvés`}
               </p>
             </div>
@@ -527,7 +525,7 @@ const Search = () => {
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(3)].map((_, i) => (
-                <div key={i} className="bg-gray-100 dark:bg-gray-700 rounded-2xl h-80 animate-pulse" />
+                <div key={i} className="bg-gray-100 rounded-2xl h-80 animate-pulse" />
               ))}
             </div>
           ) : (
@@ -539,9 +537,7 @@ const Search = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   onClick={() => window.location.href = `/restaurant/${restaurant.id}`}
-                  className={`rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition cursor-pointer ${
-                    isDark ? 'bg-gray-800' : 'bg-white'
-                  }`}
+                  className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition cursor-pointer bg-white"
                 >
                   <div className="relative">
                     <img 
@@ -573,25 +569,25 @@ const Search = () => {
                   <div className="p-5">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className={`font-display font-semibold text-lg ${isDark ? 'text-white' : 'text-darkText'}`}>
+                        <h3 className="font-display font-semibold text-lg text-darkText">
                           {restaurant.name}
                         </h3>
-                        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                        <p className="text-sm text-gray-500">
                           {restaurant.cuisine_type || 'Cuisine variée'}
                         </p>
                       </div>
-                      <div className="flex items-center gap-1 bg-primary-50 dark:bg-primary-900/30 px-2 py-1 rounded-full">
+                      <div className="flex items-center gap-1 bg-primary-50 px-2 py-1 rounded-full">
                         <FaStar className="text-yellow-400 text-sm" />
-                        <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-darkText'}`}>
+                        <span className="text-sm font-medium text-darkText">
                           {restaurant.rating || 0}
                         </span>
-                        <span className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                        <span className="text-xs text-gray-400">
                           ({restaurant.review_count || 0})
                         </span>
                       </div>
                     </div>
                     <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
-                      <div className={`flex items-center gap-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                      <div className="flex items-center gap-1 text-gray-500">
                         <FaMapMarkerAlt className="text-primary-500" />
                         <span className="truncate max-w-[120px]">{restaurant.address || 'Adresse'}</span>
                       </div>
@@ -602,14 +598,14 @@ const Search = () => {
                         <span className="text-xs text-blue-500">📍 {restaurant.distance}</span>
                       )}
                       {restaurant.is_open ? (
-                        <span className="text-xs bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 px-2 py-0.5 rounded-full">Ouvert</span>
+                        <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Ouvert</span>
                       ) : (
-                        <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-2 py-0.5 rounded-full">Fermé</span>
+                        <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Fermé</span>
                       )}
                     </div>
                     {/* Budget intelligent (si disponible) */}
                     {restaurant.price_range && (
-                      <div className="mt-2 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                      <div className="mt-2 flex items-center gap-2 text-xs text-gray-500">
                         <FaWallet className="text-primary-400" />
                         <span>À partir de {restaurant.price_range}</span>
                       </div>
@@ -624,10 +620,10 @@ const Search = () => {
           {searched && displayedResults.length === 0 && !loading && !error && (
             <div className="text-center py-20">
               <div className="text-6xl mb-4">🔍</div>
-              <h3 className={`text-2xl font-display ${isDark ? 'text-white' : 'text-darkText'}`}>
+              <h3 className="text-2xl font-display text-darkText">
                 Aucun résultat trouvé
               </h3>
-              <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} mb-4`}>
+              <p className="text-gray-500 mb-4">
                 Essayez de modifier vos critères de recherche
               </p>
               <button
