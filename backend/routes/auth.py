@@ -58,21 +58,22 @@ def login(
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    # Créer le token avec une durée différente selon "remember_me"
+    # ✅ DURÉES PROLONGÉES
     if user.remember_me:
-        # 7 jours si "Se souvenir de moi" est coché
+        # 1 AN si "Se souvenir de moi" est coché
+        access_token_expires = timedelta(days=365)
+        print(f"🔑 Token valable 365 jours pour {user.email}")
+    else:
+        # 7 JOURS par défaut (au lieu de 30 minutes)
         access_token_expires = timedelta(days=7)
         print(f"🔑 Token valable 7 jours pour {user.email}")
-    else:
-        # 30 minutes par défaut
-        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-        print(f"🔑 Token valable 30 minutes pour {user.email}")
     
     access_token = create_access_token(
         data={"sub": db_user.email}, expires_delta=access_token_expires
     )
     
     return {"access_token": access_token, "token_type": "bearer"}
+
 
 @router.get("/me", response_model=UserResponse)
 def get_current_user_info(
@@ -160,8 +161,6 @@ def google_login(data: dict, db: Session = Depends(get_db)):
         name = data.get("name", email)
         firebase_uid = data.get("firebase_uid")
 
-        print(f"🔵 Email: {email}, firebase_uid: {firebase_uid}")
-
         if not email:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -173,30 +172,26 @@ def google_login(data: dict, db: Session = Depends(get_db)):
                 detail="firebase_uid requis"
             )
 
-        print("🔵 Recherche de l'utilisateur...")
         user = db.query(User).filter(User.email == email).first()
-        print(f"🔵 Utilisateur trouvé: {user}")
 
         if not user:
-            print(f"🆕 Création d'un nouvel utilisateur: {email}")
             user = User(
                 name=name,
                 email=email,
-                # ✅ CORRECTION : Tronquer à 72 caractères
-                password_hash=get_password_hash(firebase_uid),
+                password_hash=get_password_hash(firebase_uid[:72]),
                 is_restaurateur=False
             )
             db.add(user)
             db.commit()
             db.refresh(user)
-            print(f"✅ Utilisateur créé avec ID: {user.id}")
 
-        print("🔵 Génération du token...")
-        access_token_expires = timedelta(days=7)
+        # ✅ 365 JOURS pour Google
+        access_token_expires = timedelta(days=365)
+        print(f"🔑 Token Google valable 365 jours pour {user.email}")
+        
         access_token = create_access_token(
             data={"sub": user.email}, expires_delta=access_token_expires
         )
-        print("✅ Token généré avec succès")
 
         return {"access_token": access_token, "token_type": "bearer"}
 
