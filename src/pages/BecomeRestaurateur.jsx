@@ -219,38 +219,39 @@ const BecomeRestaurateur = () => {
                   </div>
                 </div>
 
-                {/* Type de cuisine - Sélection multiple */}
+                {/* Type de cuisine - Cases à cocher */}
                 <div>
-                  <label className="block text-sm font-medium mb-1 text-gray-700">
+                  <label className="block text-sm font-medium mb-2 text-gray-700">
                     Type(s) de cuisine *
                   </label>
-                  <select
-                    multiple
-                    name="cuisine_type"
-                    value={formData.cuisine_type ? formData.cuisine_type.split(', ') : []}
-                    onChange={(e) => {
-                      const options = e.target.options;
-                      const values = [];
-                      for (let i = 0; i < options.length; i++) {
-                        if (options[i].selected) {
-                          values.push(options[i].value);
-                        }
-                      }
-                      setFormData(prev => ({
-                        ...prev,
-                        cuisine_type: values.join(', ')
-                      }));
-                    }}
-                    required
-                    className="w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-gray-50 text-gray-700"
-                    size={5}
-                  >
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                     {cuisineTypes.map(type => (
-                      <option key={type} value={type}>{type}</option>
+                      <label key={type} className="flex items-center gap-2 text-sm text-gray-700">
+                        <input
+                          type="checkbox"
+                          value={type}
+                          checked={formData.cuisine_type.split(', ').includes(type)}
+                          onChange={(e) => {
+                            const currentValues = formData.cuisine_type ? formData.cuisine_type.split(', ') : [];
+                            let newValues;
+                            if (e.target.checked) {
+                              newValues = [...currentValues, type];
+                            } else {
+                              newValues = currentValues.filter(item => item !== type);
+                            }
+                            setFormData(prev => ({
+                              ...prev,
+                              cuisine_type: newValues.join(', ')
+                            }));
+                          }}
+                          className="w-4 h-4 text-primary-500 rounded"
+                        />
+                        {type}
+                      </label>
                     ))}
-                  </select>
+                  </div>
                   <p className="text-xs text-gray-400 mt-1">
-                    Maintenez <kbd className="px-1 py-0.5 bg-gray-200 rounded text-xs">Ctrl</kbd> (ou <kbd className="px-1 py-0.5 bg-gray-200 rounded text-xs">Cmd</kbd> sur Mac) pour sélectionner plusieurs types
+                    Sélectionnez un ou plusieurs types de cuisine
                   </p>
                 </div>
 
