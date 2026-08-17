@@ -219,23 +219,39 @@ const BecomeRestaurateur = () => {
                   </div>
                 </div>
 
-                {/* Type de cuisine */}
+                {/* Type de cuisine - Sélection multiple */}
                 <div>
                   <label className="block text-sm font-medium mb-1 text-gray-700">
-                    Type de cuisine *
+                    Type(s) de cuisine *
                   </label>
                   <select
+                    multiple
                     name="cuisine_type"
-                    value={formData.cuisine_type}
-                    onChange={handleChange}
+                    value={formData.cuisine_type ? formData.cuisine_type.split(', ') : []}
+                    onChange={(e) => {
+                      const options = e.target.options;
+                      const values = [];
+                      for (let i = 0; i < options.length; i++) {
+                        if (options[i].selected) {
+                          values.push(options[i].value);
+                        }
+                      }
+                      setFormData(prev => ({
+                        ...prev,
+                        cuisine_type: values.join(', ')
+                      }));
+                    }}
                     required
                     className="w-full px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-gray-50 text-gray-700"
+                    size={5}
                   >
-                    <option value="">Sélectionnez un type</option>
                     {cuisineTypes.map(type => (
                       <option key={type} value={type}>{type}</option>
                     ))}
                   </select>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Maintenez <kbd className="px-1 py-0.5 bg-gray-200 rounded text-xs">Ctrl</kbd> (ou <kbd className="px-1 py-0.5 bg-gray-200 rounded text-xs">Cmd</kbd> sur Mac) pour sélectionner plusieurs types
+                  </p>
                 </div>
 
                 {/* Fourchette de prix */}
